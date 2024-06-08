@@ -19,7 +19,7 @@ final readonly class UserRepo
     {
         try {
             $data = $this->model::get(
-                ['name', 'email', 'status', 'created_at as joined_at']
+                ['id', 'name', 'email', 'status', 'created_at as joined_at']
                 )->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {

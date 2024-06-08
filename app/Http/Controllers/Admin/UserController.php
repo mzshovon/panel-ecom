@@ -24,7 +24,7 @@ class UserController extends Controller
             $data = [];
             $data['page'] = self::INDEX_PAGE;
             $data['users'] = $this->repo->getUsers();
-            dd($data);
+            return view('admin.user.view', $data);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
