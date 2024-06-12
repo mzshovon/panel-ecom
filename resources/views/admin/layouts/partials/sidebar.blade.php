@@ -13,7 +13,7 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link {{ in_array($route, ['admin.users']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.dashboard')}}">
+            <a class="nav-link {{ in_array($route, ['admin.users.index']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.users.index')}}">
                 <i class="bi bi-grid"></i>
                 <span>Users</span>
             </a>

@@ -12,29 +12,89 @@ class UserService implements UserServiceInterface
         private readonly UserRepo $userRepo
     ){}
 
+    /**
+     * @return array
+     */
     function getUsers() : array
     {
         $data = $this->userRepo->get();
         return $data ?? [];
     }
 
-    function getUserById() : Model
+    /**
+     * @param int $id
+     *
+     * @return Model
+     */
+    function getUserById(int $id) : Model|null
     {
-        return new Model();
+        $data = $this->userRepo->getByColumn("id",$id);
+        return $data;
     }
 
-    function createUser() : bool
+    /**
+     * @param array $request
+     *
+     * @return bool
+     */
+    function createUser(array $request) : bool
     {
-        return true;
+        if(isset($request['password'])) {
+            $request['password'] = bcrypt($request['password']);
+        }
+        $data = $this->userRepo->create($request);
+        return $data ? true : false;
     }
 
-    function updateUser() : bool
+    /**
+     * @param int $id
+     * @param array $request
+     *
+     * @return bool
+     */
+    function updateUser(int $id, array $request) : bool
     {
-        return true;
+        if(isset($request['password']) && $request['password']) {
+            $request['password'] = bcrypt($request['password']);
+        } else {
+            unset($request['password']);
+        }
+        $data = $this->userRepo->update("id", $id, $this->fillableData($request));
+        return $data ?? false;
     }
 
-    function deleteUser() : bool
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    function deleteUser(int $id) : bool
     {
         return false;
+    }
+
+    /**
+     * @param array $request
+     *
+     * @return array
+     */
+    private function fillableData(array $request) : array
+    {
+        $data = [];
+        $fillable = [
+            'name',
+            'email',
+            'password',
+            'address',
+            'status',
+            'mobile',
+            'image',
+        ];
+        foreach ($request as $key => $value) {
+            if(in_array($key, $fillable)){
+                $data[$key] = $value;
+            }
+        }
+        return $data;
     }
 }
