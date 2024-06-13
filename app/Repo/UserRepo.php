@@ -24,9 +24,9 @@ final readonly class UserRepo
     function get() : array
     {
         try {
-            $data = $this->model::get(
-                ['id', 'name', 'email', 'status', 'created_at as joined_at']
-                )->toArray();
+            $data = $this->model::orderBy("updated_at", "desc")
+                ->get(['id', 'name', 'email', 'status', 'created_at'])
+                ->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
@@ -74,6 +74,21 @@ final readonly class UserRepo
     {
         try {
             return $this->model::where($column, $value)->update($request);
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * @param string $column
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    function delete(string $column = "id", $value) : bool
+    {
+        try {
+            return $this->model::where($column, $value)->delete();
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }

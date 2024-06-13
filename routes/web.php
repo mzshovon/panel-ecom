@@ -30,5 +30,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         'users' => UserController::class,
         'products' => ProductController::class,
     ]);
+
+    Route::put('/users/status/{user}', [UserController::class, 'statusChange'])->name('users.status.change');
 });
 

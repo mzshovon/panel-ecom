@@ -30,7 +30,7 @@ class UserController extends Controller
             $data['users'] = $this->repo->getUsers();
             return view('admin.user.view', $data);
         } catch (Exception $ex) {
-            return redirect()->with($ex->getMessage());
+            return redirect()->back()->with("error", $ex->getMessage());
         }
     }
 
@@ -108,14 +108,30 @@ class UserController extends Controller
     }
 
     /**
+     * Update the status specified resource in storage.
+     */
+    public function statusChange(Request $request, int $id)
+    {
+        try {
+            $update = $this->repo->updateUser($id, $request->all());
+            if($update) {
+                return response()->json([($update ? 'success' : 'error') =>
+                    ($update ? 'User status changed successfully.' : 'something went wrong with chage the status')]);
+            }
+        } catch (Exception $ex) {
+            return redirect()->back()->with("error", $ex->getMessage());
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)
     {
         try {
-            $data = [];
-            $data['page'] = self::CREATE_PAGE;
-            return view('admin.user.create', $data);
+            $delete = $this->repo->deleteUser($id);
+            return response()->json([($delete ? 'success' : 'error') =>
+                    ($delete ? 'User deleted successfully.' : 'something went wrong with delete')]);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
         }

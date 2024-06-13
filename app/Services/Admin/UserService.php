@@ -70,7 +70,8 @@ class UserService implements UserServiceInterface
      */
     function deleteUser(int $id) : bool
     {
-        return false;
+        $data = $this->userRepo->delete("id", $id);
+        return $data ?? false;
     }
 
     /**

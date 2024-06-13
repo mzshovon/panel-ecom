@@ -65,7 +65,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <button class="btn btn-primary">Back</button>
+                            <a href="{{route('admin.users.index')}}" class="btn btn-primary"><i class="bi bi-arrow-left-circle"></i> Back</a>
                         </div>
                     </form><!-- End Multi Columns Form -->
                     @else
