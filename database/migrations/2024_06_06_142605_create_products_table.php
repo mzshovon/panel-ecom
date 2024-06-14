@@ -17,15 +17,19 @@ return new class extends Migration
             $table->text('description');
             $table->text('short_description')->nullable();
             $table->string('sku')->unique();
+            $table->bigInteger('stock')->default(0);
             $table->decimal('price', 10, 2);
             $table->decimal('previous_price', 10, 2)->nullable();
             $table->date('tentative_delivery_date')->nullable();
             $table->decimal('weight', 8, 2);
             $table->decimal('height', 8, 2);
             $table->decimal('discount', 8, 2)->nullable();
+            $table->decimal('discount_level', 8, 2)->default(0);
             $table->enum('discount_type', ['percentage', 'amount'])->nullable();
+            $table->json('variants');
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

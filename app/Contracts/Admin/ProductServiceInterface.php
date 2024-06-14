@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 interface ProductServiceInterface {
 
     function getProducts():array;
-    function getProductById():Model;
-    function createProduct():bool;
-    function updateProduct():bool;
-    function deleteProduct():bool;
+    function getProductById(int $id) : Model|null;
+    function getProductsVariants() : array;
+    function createProduct(array $request) : bool;
+    function updateProduct(int $id, array $request) : bool;
+    function deleteProduct(int $id) : bool;
 
 }

@@ -20,7 +20,7 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link {{ in_array($route, ['admin.products']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.dashboard')}}">
+            <a class="nav-link {{ in_array($route, ['admin.products.index']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.products.index')}}">
                 <i class="bi bi-grid"></i>
                 <span>Products</span>
             </a>

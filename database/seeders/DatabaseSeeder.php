@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(2)->create();
         $this->call([
             LaratrustSeeder::class,
+            VariantSeeder::class,
             // \App\Models\User::factory(2)->create()
         ]);
         // \App\Models\User::factory()->create([
