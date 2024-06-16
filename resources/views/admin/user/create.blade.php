@@ -13,11 +13,11 @@
                     <form class="row g-3" method="POST" action="{{route('admin.users.store')}}">
                         @csrf
                         <div class="col-md-6">
-                            <label for="inputName5" class="form-label">Your Name</label>
+                            <label for="inputName5" class="form-label">Your Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" id="inputName5">
                         </div>
                         <div class="col-md-6">
-                            <label for="inputEmail5" class="form-label">Email</label>
+                            <label for="inputEmail5" class="form-label">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control" id="inputEmail5">
                         </div>
                         <div class="col-md-6">
@@ -25,18 +25,18 @@
                             <input type="text" name="mobile" class="form-control" id="inputEmail5" maxlength="11" min="0">
                         </div>
                         <div class="col-md-6">
-                            <label for="inputEmail5" class="form-label">Status</label>
+                            <label for="inputEmail5" class="form-label">Status <span class="text-danger">*</span></label>
                             <select id="inputState" name="status" class="form-select">
                                 <option value="0" selected>Deactive</option>
                                 <option value="1">Active</option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="inputPassword5" class="form-label">Password</label>
+                            <label for="inputPassword5" class="form-label">Password <span class="text-danger">*</span></label>
                             <input type="password" name="password" class="form-control" id="inputPassword5">
                         </div>
                         <div class="col-md-6">
-                            <label for="inputPassword5" class="form-label">Confirm Password</label>
+                            <label for="inputPassword5" class="form-label">Confirm Password <span class="text-danger">*</span></label>
                             <input type="password" name="password_confirmation" class="form-control" id="inputPassword5">
                         </div>
                         <div class="col-md-6">

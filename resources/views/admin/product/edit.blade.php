@@ -14,60 +14,61 @@
                 <div class="card-body">
                     @include('admin.layouts.partials.alerts')
                     @if (!empty($product))
-                    <form class="row g-3" method="POST" action="{{route('admin.products.store')}}" enctype="multipart/form-data">
+                    <form class="row g-3" method="POST" action="{{route('admin.products.update', ["product" => $product->id])}}" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="col-md-6">
                             <label for="inputName5" class="form-label">Product Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" id="inputName5">
+                            <input type="text" name="name" class="form-control" id="inputName5" value="{{$product->name ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">SKU <span class="text-danger">*</span></label>
-                            <input type="text" name="sku" class="form-control" id="inputEmail5">
+                            <input type="text" name="sku" class="form-control" id="inputEmail5" value="{{$product->sku ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Stock <span class="text-danger">*</span></label>
-                            <input type="number" name="stock" class="form-control" id="inputEmail5" min="0">
+                            <input type="number" name="stock" class="form-control" id="inputEmail5" min="0" value="{{$product->stock ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Current Price (BDT) <span class="text-danger">*</span></label>
-                            <input type="number" name="price" class="form-control" id="inputEmail5" min="0">
+                            <input type="number" name="price" class="form-control" id="inputEmail5" min="0" value="{{$product->price ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Previous Price (BDT)</label>
-                            <input type="number" name="previous_price" class="form-control" id="inputEmail5" min="0">
+                            <input type="number" name="previous_price" class="form-control" id="inputEmail5" min="0" value="{{$product->previous_price ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Height</label>
-                            <input type="number" name="height" class="form-control" id="inputEmail5" min="0">
+                            <input type="number" name="height" class="form-control" id="inputEmail5" min="0" value="{{$product->height ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Weight</label>
-                            <input type="number" name="weight" class="form-control" id="inputEmail5" min="0">
+                            <input type="number" name="weight" class="form-control" id="inputEmail5" min="0" value="{{$product->weight ?? "N/A"}}">
                         </div>
                         <div class="col-md-6">
                             <label for="inputPassword5" class="form-label">Tentative Delivery Date</label>
-                            <input type="date" name="tentative_delivery_date" class="form-control" id="inputPassword5">
+                            <input type="date" name="tentative_delivery_date" class="form-control" id="inputPassword5" value="{{$product->tentative_delivery_date ?? "N/A"}}">
                         </div>
                         <div class="col-md-2">
                             <label for="inputPassword5" class="form-label">Discount</label>
-                            <input type="number" name="discount" class="form-control" id="inputPassword5" min="0">
+                            <input type="number" name="discount" class="form-control" id="inputPassword5" min="0" value="{{$product->discount ?? ""}}">
                         </div>
                         <div class="col-md-2">
                             <label for="inputState" class="form-label">Discount type</label>
-                            <select id="inputState" name="state" class="form-select">
-                                <option value="amount">Price</option>
-                                <option value="percentage">Percentage</option>
+                            <select id="inputState" name="discount_type" class="form-select">
+                                <option value="amount" {{$product->discount_type == "amount" ? "selected" : ""}}>Price</option>
+                                <option value="percentage" {{$product->discount_type == "percentage" ? "selected" : ""}}>Percentage</option>
                             </select>
                         </div>
                         <div class="col-md-2">
                             <label for="inputPassword5" class="form-label">Price Up To</label>
-                            <input type="number" name="discount" class="form-control" id="inputPassword5" min="0">
+                            <input type="number" name="discount_level" class="form-control" id="inputPassword5" min="0" value="{{$product->discount ?? ""}}">
                         </div>
                         <div class="col-md-6">
                             <label for="inputState" class="form-label">Variants</label>
                             <select id="inputState" name="variants[]" class="form-select variants" multiple="multiple">
                                 @forelse ($variants as $variant)
-                                    <option value="{{$variant['name']}}">{{ucfirst($variant['name'])}} ({{$variant['type']}})</option>
+                                    <option value="{{$variant['name']}}" {{in_array($variant['name'], json_decode($product['variants'], true)) ? "selected" : ""}}>{{ucfirst($variant['name'])}} ({{$variant['type']}})</option>
                                 @empty
                                     No data available!
                                 @endforelse
@@ -80,16 +81,18 @@
                         <div class="col-6">
                             <label for="floatingTextarea" class="form-label">Description <span class="text-danger">*</span></label>
                             <textarea class="tinymce-editor" name="description">
+                                {!! $product->description ?? "" !!}
                               </textarea><!-- End TinyMCE Editor -->
                         </div>
                         <div class="col-6">
                             <label for="floatingTextarea" class="form-label">Short Description</label>
                             <textarea class="tinymce-editor" name="short_description">
+                                {!! $product->short_description ?? "" !!}
                               </textarea><!-- End TinyMCE Editor -->
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
+                            <a href="{{route('admin.products.index')}}" class="btn btn-primary"><i class="bi bi-arrow-left-circle"></i> Back</a>
                         </div>
                     </form><!-- End Multi Columns Form -->
                     @else

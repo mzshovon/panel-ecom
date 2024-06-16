@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -19,6 +21,34 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    protected function attemptLogin(Request $request)
+    {
+        // Add the status check to the credentials array
+        $credentials = array_merge($this->credentials($request), ['status' => 1]);
+
+        // Attempt login with the modified credentials
+        return $this->guard()->attempt(
+            $credentials,
+            $request->filled('remember')
+        );
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        // Check if the user exists and if their status is not active
+        $user = \App\Models\User::where('email', $request->input('email'))->first();
+
+        if ($user && $user->status != 1) {
+            throw ValidationException::withMessages([
+                $this->username() => [trans('auth.inactive')],
+            ]);
+        }
+
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
 
     /**
      * Where to redirect users after login.

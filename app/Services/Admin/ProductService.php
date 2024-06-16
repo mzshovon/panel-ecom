@@ -83,6 +83,9 @@ class ProductService implements ProductServiceInterface
      */
     function updateProduct(int $id, array $request) : bool
     {
+        if(isset($request['variants'])) {
+            $request['variants'] = json_encode($request['variants']);
+        }
         $data = $this->productRepo->update("id", $id, $this->fillableData($request));
         return $data ?? false;
     }
@@ -136,8 +139,10 @@ class ProductService implements ProductServiceInterface
             'tentative_delivery_date',
             'weight',
             'height',
+            'variants',
             'discount',
             'discount_type',
+            'discount_level',
             'created_by',
             'updated_by'
         ];

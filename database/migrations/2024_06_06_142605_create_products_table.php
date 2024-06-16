@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('weight', 8, 2);
             $table->decimal('height', 8, 2);
             $table->decimal('discount', 8, 2)->nullable();
-            $table->decimal('discount_level', 8, 2)->default(0);
+            $table->decimal('discount_level', 8, 2)->default(0)->nullable();
             $table->enum('discount_type', ['percentage', 'amount'])->nullable();
             $table->json('variants')->nullable();
             $table->bigInteger('created_by');

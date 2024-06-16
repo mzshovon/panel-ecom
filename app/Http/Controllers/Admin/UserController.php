@@ -27,7 +27,7 @@ class UserController extends Controller
         try {
             $data = [];
             $data['page'] = self::INDEX_PAGE;
-            $data['users'] = $this->repo->getUsers();
+            $data['users'] = customPaginate($this->repo->getUsers(), 10);
             return view('admin.user.view', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
