@@ -1,4 +1,7 @@
 @extends('admin.layouts.app')
+@section('stylesheet')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
 @section('content')
 <div class="pagetitle">
     <h1>{{$page}}</h1>
@@ -10,7 +13,7 @@
             <div class="card">
                 <div class="card-body">
                     @include('admin.layouts.partials.alerts')
-                    <form class="row g-3" method="POST" action="{{route('admin.users.store')}}">
+                    <form class="row g-3" method="POST" action="{{route('admin.products.store')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <label for="inputName5" class="form-label">Product Name <span class="text-danger">*</span></label>
@@ -61,7 +64,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="inputState" class="form-label">Variants</label>
-                            <select id="inputState" name="variants[]" class="form-select">
+                            <select id="inputState" name="variants[]" class="form-select variants" multiple="multiple">
                                 @forelse ($variants as $variant)
                                     <option value="{{$variant['name']}}">{{ucfirst($variant['name'])}} ({{$variant['type']}})</option>
                                 @empty
@@ -71,7 +74,7 @@
                         </div>
                         <div class="col-6">
                             <label for="inputFormFile" class="form-label">Product Images <span class="text-danger">*</span></label>
-                            <input class="form-control" type="file" id="formFile" multiple>
+                            <input class="form-control" name="images[]" type="file" id="formFile" multiple>
                         </div>
                         <div class="col-6">
                             <label for="floatingTextarea" class="form-label">Description <span class="text-danger">*</span></label>
@@ -96,4 +99,13 @@
 
     </div>
 </section>
+@endsection
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.variants').select2();
+    });
+</script>
+
 @endsection

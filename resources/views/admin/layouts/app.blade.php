@@ -28,6 +28,7 @@
     <link href="{{URL::to('/')}}/public/assets/vendor/simple-datatables/style.css" rel="stylesheet">
     <link href="{{URL::to('/')}}/public/assets/css/style.css" rel="stylesheet">
     <link href="{{URL::to('/')}}/public/assets/css/sidebar.css" rel="stylesheet">
+    @yield('stylesheet')
 </head>
 
 <body>

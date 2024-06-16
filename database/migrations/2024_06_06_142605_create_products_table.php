@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('discount', 8, 2)->nullable();
             $table->decimal('discount_level', 8, 2)->default(0);
             $table->enum('discount_type', ['percentage', 'amount'])->nullable();
-            $table->json('variants');
+            $table->json('variants')->nullable();
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by');
             $table->softDeletes();

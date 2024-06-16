@@ -43,7 +43,7 @@ if (!function_exists('storeOrUpdateImage')) {
         if(!File::exists($filePath)) {
             mkdir($filePath, 0777, true);
         }
-        $fileName = "$fileNamePrefix.".$file->getClientOriginalExtension();
+        $fileName = "$fileNamePrefix";
         $dirPath = $filePath . $fileName;
         if($unlinkExisting) {
             if (File::exists($dirPath)) {

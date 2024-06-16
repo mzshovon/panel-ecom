@@ -84,6 +84,7 @@ class ProductController extends Controller
         try {
             $data = [];
             $data['page'] = self::UPDATE_PAGE;
+            $data['variants'] = $this->repo->getProductsVariants();
             $data['product'] = $this->repo->getProductById($id);
             return view('admin.product.edit', $data);
         } catch (Exception $ex) {

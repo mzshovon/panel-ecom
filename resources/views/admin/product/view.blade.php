@@ -8,7 +8,8 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">
-                <a class="btn btn-primary btn-md" href="{{route('admin.products.create')}}" style="float: right">Add Product
+                <a class="btn btn-primary btn-md" href="{{route('admin.products.create')}}" style="float: right">Add
+                    Product
                     <i class="bi bi-plus"></i></a>
             </h5>
             <br>
@@ -22,8 +23,11 @@
                         <th scope="col">Stock</th>
                         <th scope="col">Current Price</th>
                         <th scope="col">Previous Price</th>
+                        <th scope="col">Images</th>
+                        <th scope="col">Variants</th>
                         <th scope="col">Updated By</th>
                         <th scope="col">Created At</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,10 +39,24 @@
                         <td>{{$product['stock']}}</td>
                         <td>{{$product['price']}}</td>
                         <td>{{$product['previous_price']}}</td>
-                        <td>{{$product['updated_by']}}</td>
+                        <td>
+                            @forelse ($product['images'] as $key => $image)
+                            <img class="table-img" src="{{URL::to("/") . "/" .$image['image_path']}}">
+                            @empty
+                            N/A
+                            @endforelse
+                        </td>
+                        <td>
+                            @forelse (json_decode($product['variants'], true) as $varient)
+                            <span class="badge bg-primary">{{ucfirst($varient)}}</span>
+                            @empty
+                            <span class="badge bg-danger">N/A</span>
+                            @endforelse
+                        </td>
+                        <td>{{ucfirst($product['updated_by']['name'])}}</td>
                         <td>{{$product['created_at']}}</td>
                         <td>
-                            <a class="btn btn-primary btn-sm" href="{{route("admin.products.edit", ["product"=> $product["id"]])}}">
+                            <a class="btn btn-primary btn-sm" href="{{route("admin.products.edit", ["product"=>$product["id"]])}}">
                                 <i class="bi bi-pencil"></i>
                             </a>
                             <a class="btn btn-danger btn-sm"
