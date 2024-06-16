@@ -2,20 +2,20 @@
 
 namespace App\Repo;
 
-use App\Models\Product;
+use App\Models\Category;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-final readonly class ProductRepo
+final readonly class CategoryRepo
 {
     private Model $model;
 
     /**
-     * @param private
+     * @param  private
      */
-    function __construct(private Product $product)
+    function __construct(private Category $variant)
     {
-        $this->model = $product;
+        $this->model = $variant;
     }
 
     /**
@@ -24,20 +24,8 @@ final readonly class ProductRepo
     function get() : array
     {
         try {
-            $data = $this->model::with("updatedBy", "images")
-                ->orderBy("updated_at", "desc")
-                ->get([
-                    'id',
-                    'name',
-                    'sku',
-                    'stock',
-                    'price',
-                    'previous_price',
-                    'variants',
-                    'tentative_delivery_date',
-                    'updated_by',
-                    'created_at'
-                ])
+            $data = $this->model::orderBy("updated_at", "desc")
+                ->get(['id','name', 'status'])
                 ->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {
@@ -54,7 +42,7 @@ final readonly class ProductRepo
     function getByColumn(string $column = "id", string $value) : Model|null
     {
         try {
-            $data = $this->model::with("categories")->where($column, $value)->first();
+            $data = $this->model::where($column, $value)->first();
             return $data ?? null;
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
