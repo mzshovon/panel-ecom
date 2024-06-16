@@ -33,6 +33,7 @@ class ProductUpdateRequest extends FormRequest
             "discount_type" => "nullable|string|in:percentage,amount",
             "discount_level" => "nullable|numeric",
             "variants" => "nullable|array",
+            "categories" => "nullable|array",
             "description" => "required|string",
             "short_description" => "nullable|string",
             // 'images' => 'required|array',

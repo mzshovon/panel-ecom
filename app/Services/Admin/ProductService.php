@@ -3,6 +3,7 @@
 namespace App\Services\Admin;
 
 use App\Contracts\Admin\ProductServiceInterface;
+use App\Repo\CategoryRepo;
 use App\Repo\ProductImagesRepo;
 use App\Repo\ProductRepo;
 use App\Repo\VariantRepo;
@@ -16,6 +17,7 @@ class ProductService implements ProductServiceInterface
         private readonly ProductRepo $productRepo,
         private readonly VariantRepo $variantRepo,
         private readonly ProductImagesRepo $productImagesRepo,
+        private readonly CategoryRepo $categoryRepo,
     ){}
 
     /**
@@ -33,6 +35,14 @@ class ProductService implements ProductServiceInterface
     function getProductsVariants(): array
     {
         return $this->variantRepo->get() ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    function getCategories(): array
+    {
+        return $this->categoryRepo->get() ?? [];
     }
 
     /**
@@ -63,6 +73,9 @@ class ProductService implements ProductServiceInterface
         }
         $data = $this->productRepo->create($request);
         if($data) {
+            if(isset($request['categories'])) {
+                $data->categories()->attach($request['categories']);
+            }
             $productImagesPath = $this->uploadImageandGetImageDir($uploadedImages, $data->id);
             if(!empty($productImagesPath)) {
                 $productImageRepo = $this->productImagesRepo;
@@ -87,6 +100,10 @@ class ProductService implements ProductServiceInterface
             $request['variants'] = json_encode($request['variants']);
         }
         $data = $this->productRepo->update("id", $id, $this->fillableData($request));
+        if(isset($request['categories'])) {
+            $product = $this->productRepo->getByColumn("id", $id);
+            $product->categories()->sync($request['categories']);
+        }
         return $data ?? false;
     }
 

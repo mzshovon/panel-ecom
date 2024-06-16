@@ -15,10 +15,7 @@ class ProductController extends Controller
     const CREATE_PAGE = "Create Products";
     const UPDATE_PAGE = "Update Products";
 
-    public function __construct(private ProductServiceInterface $repo)
-    {
-
-    }
+    public function __construct(private ProductServiceInterface $repo){}
     /**
      * Display a listing of the resource.
      */
@@ -43,6 +40,7 @@ class ProductController extends Controller
             $data = [];
             $data['page'] = self::CREATE_PAGE;
             $data['variants'] = $this->repo->getProductsVariants();
+            $data['categories'] = $this->repo->getCategories();
             return view('admin.product.create', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
@@ -85,6 +83,7 @@ class ProductController extends Controller
             $data = [];
             $data['page'] = self::UPDATE_PAGE;
             $data['variants'] = $this->repo->getProductsVariants();
+            $data['categories'] = $this->repo->getCategories();
             $data['product'] = $this->repo->getProductById($id);
             return view('admin.product.edit', $data);
         } catch (Exception $ex) {

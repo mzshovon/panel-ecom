@@ -64,11 +64,21 @@
                             <label for="inputPassword5" class="form-label">Price Up To</label>
                             <input type="number" name="discount_level" class="form-control" id="inputPassword5" min="0" value="{{$product->discount ?? ""}}">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label for="inputState" class="form-label">Variants</label>
-                            <select id="inputState" name="variants[]" class="form-select variants" multiple="multiple">
+                            <select id="inputVariants" name="variants[]" class="form-select variants" multiple="multiple">
                                 @forelse ($variants as $variant)
                                     <option value="{{$variant['name']}}" {{in_array($variant['name'], json_decode($product['variants'], true)) ? "selected" : ""}}>{{ucfirst($variant['name'])}} ({{$variant['type']}})</option>
+                                @empty
+                                    No data available!
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputState" class="form-label">Categories</label>
+                            <select id="inputCategory" name="categories[]" class="form-select variants" multiple="multiple">
+                                @forelse ($categories as $category)
+                                    <option value="{{$category['id']}}" {{$product->categories->contains($category['id']) ? 'selected' : ''}}>{{ucfirst($category['name'])}}</option>
                                 @empty
                                     No data available!
                                 @endforelse
@@ -111,8 +121,9 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.variants').select2();
+     $(document).ready(function() {
+        $('#inputVariants').select2();
+        $('#inputCategory').select2();
     });
 </script>
 
