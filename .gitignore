@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 public/assets
 public/admin
+/storage/img

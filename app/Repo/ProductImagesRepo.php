@@ -2,20 +2,20 @@
 
 namespace App\Repo;
 
-use App\Models\Product;
+use App\Models\ProductImage;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-final readonly class ProductRepo
+final readonly class ProductImagesRepo
 {
     private Model $model;
 
     /**
-     * @param private
+     * @param  private
      */
-    function __construct(private Product $product)
+    function __construct(private ProductImage $variant)
     {
-        $this->model = $product;
+        $this->model = $variant;
     }
 
     /**
@@ -24,20 +24,8 @@ final readonly class ProductRepo
     function get() : array
     {
         try {
-            $data = $this->model::with("updatedBy", "images")
-                ->orderBy("updated_at", "desc")
-                ->get([
-                    'id',
-                    'name',
-                    'sku',
-                    'stock',
-                    'price',
-                    'previous_price',
-                    'variants',
-                    'tentative_delivery_date',
-                    'updated_by',
-                    'created_at'
-                ])
+            $data = $this->model::orderBy("updated_at", "desc")
+                ->get(['id', 'name', 'type', 'created_at'])
                 ->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {
@@ -70,6 +58,20 @@ final readonly class ProductRepo
     {
         try {
             return $this->model::create($request);
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * @param array $request
+     *
+     * @return bool
+     */
+    function insert(array $request) : bool
+    {
+        try {
+            return $this->model::insert($request);
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }

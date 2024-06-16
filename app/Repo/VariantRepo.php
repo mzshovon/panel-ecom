@@ -2,20 +2,20 @@
 
 namespace App\Repo;
 
-use App\Models\Product;
+use App\Models\Variant;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-final readonly class ProductRepo
+final readonly class VariantRepo
 {
     private Model $model;
 
     /**
-     * @param private
+     * @param  private
      */
-    function __construct(private Product $product)
+    function __construct(private Variant $variant)
     {
-        $this->model = $product;
+        $this->model = $variant;
     }
 
     /**
@@ -24,20 +24,8 @@ final readonly class ProductRepo
     function get() : array
     {
         try {
-            $data = $this->model::with("updatedBy", "images")
-                ->orderBy("updated_at", "desc")
-                ->get([
-                    'id',
-                    'name',
-                    'sku',
-                    'stock',
-                    'price',
-                    'previous_price',
-                    'variants',
-                    'tentative_delivery_date',
-                    'updated_by',
-                    'created_at'
-                ])
+            $data = $this->model::orderBy("updated_at", "desc")
+                ->get(['id', 'name', 'type', 'created_at'])
                 ->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {
