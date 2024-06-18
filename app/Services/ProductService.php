@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\HomeServiceInterface;
 use App\Contracts\ProductServiceInterface;
 use App\Repo\ProductRepo;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductService implements ProductServiceInterface
 {
@@ -25,13 +26,13 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * @param int $num
+     * @param int $id
      *
-     * @return array
+     * @return Model|null
      */
-    public function getSingleProductById(int $id): array
+    public function getSingleProductById(int $id): Model|null
     {
-        $data = $this->productRepo->latest($id);
-        return $data ?? [];
+        $data = $this->productRepo->getByColumn("id", $id);
+        return $data;
     }
 }

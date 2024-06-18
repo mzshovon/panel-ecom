@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
-Route::get('/product/{productId}', [UserController::class, 'statusChange'])->name('users.status.change');
+Route::get('/product/{productId}', [FrontendProductController::class, 'singleProduct'])->name('single-product');
 
 Auth::routes();
 

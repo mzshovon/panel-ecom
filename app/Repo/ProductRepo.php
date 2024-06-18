@@ -82,7 +82,7 @@ final readonly class ProductRepo
     function getByColumn(string $column = "id", string $value) : Model|null
     {
         try {
-            $data = $this->model::with("categories")->where($column, $value)->first();
+            $data = $this->model::with("categories","images")->where($column, $value)->first();
             return $data ?? null;
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());

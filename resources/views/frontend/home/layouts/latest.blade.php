@@ -16,13 +16,11 @@
                 <div class="product">
                 <div class="product-wrap">
                     @foreach ($product['images'] as $key => $image)
+                    <a href="{{route('single-product', ['productId' => $product['id']])}}">
                         @if (in_array($key, [0,1]))
-                            <a href="">
-                                <img class="img-fluid mb-3 img-{{numberToOrdinal($key + 1)}}" src="{{URL::to("/") . "/" .$image['image_path']}}" alt="product-img"
-                                style="height: 355px; width:250px"
-                                />
-                            </a>
+                                <img class="img-fluid latest-img mb-3 img-{{numberToOrdinal($key + 1)}}" src="{{URL::to("/") . "/" .$image['image_path']}}" alt="product-img"/>
                         @endif
+                    </a>
                     @endforeach
                 </div>
                 @if ($product['stock'] > 0)
