@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Repo\CategoryRepo;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -94,5 +96,45 @@ if (!function_exists('setStartEndDayForFiltering')) {
             $to = date($to) . " 23:59:59";
         }
         return [$from, $to];
+    }
+}
+
+if (!function_exists('getCategoryList')) {
+    /**
+     * Use if your filtering logic is:
+     * If user doesn't select from and to, then it returns null
+     *
+     * @return array
+     */
+    function getCategoryList()
+    {
+        $categoryRepo = new CategoryRepo(new Category());
+        return $categoryRepo->get();
+    }
+}
+
+if (!function_exists('numberToOrdinal')) {
+    /**
+     * Use if your filtering logic is:
+     * If user doesn't select from and to, then it returns null
+     *
+     * @return string
+     */
+    function numberToOrdinal($number) {
+        $ordinals = [
+            1 => 'first',
+            2 => 'second',
+            3 => 'third',
+            4 => 'fourth',
+            5 => 'fifth',
+            6 => 'sixth',
+            7 => 'seventh',
+            8 => 'eighth',
+            9 => 'ninth',
+            10 => 'tenth'
+            // Add more ordinals as needed
+        ];
+
+        return isset($ordinals[$number]) ? $ordinals[$number] : "{$number}th";
     }
 }

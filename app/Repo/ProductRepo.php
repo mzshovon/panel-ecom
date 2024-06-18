@@ -46,6 +46,34 @@ final readonly class ProductRepo
     }
 
     /**
+     * @return array
+     */
+    function latest($num = 4) : array
+    {
+        try {
+            $data = $this->model::with("updatedBy", "images")
+                ->orderBy("updated_at", "desc")
+                ->get([
+                    'id',
+                    'name',
+                    'sku',
+                    'stock',
+                    'price',
+                    'previous_price',
+                    'variants',
+                    'tentative_delivery_date',
+                    'updated_by',
+                    'created_at'
+                ])
+                ->take($num)
+                ->toArray();
+            return !empty($data) ? $data : [];
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
      * @param string $column
      * @param string $value
      *

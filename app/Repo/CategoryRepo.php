@@ -13,9 +13,9 @@ final readonly class CategoryRepo
     /**
      * @param  private
      */
-    function __construct(private Category $variant)
+    function __construct(private Category $category)
     {
-        $this->model = $variant;
+        $this->model = $category;
     }
 
     /**
