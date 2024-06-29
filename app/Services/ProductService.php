@@ -4,13 +4,15 @@ namespace App\Services;
 
 use App\Contracts\HomeServiceInterface;
 use App\Contracts\ProductServiceInterface;
+use App\Repo\CategoryRepo;
 use App\Repo\ProductRepo;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductService implements ProductServiceInterface
 {
     public function __construct(
-        private readonly ProductRepo $productRepo
+        private readonly ProductRepo $productRepo,
+        private readonly CategoryRepo $categoryRepo
     )
     {}
 
@@ -34,5 +36,22 @@ class ProductService implements ProductServiceInterface
     {
         $data = $this->productRepo->getByColumn("id", $id);
         return $data;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
+    public function getProductListByCategoryId(int $catId): array
+    {
+        $data = $this->categoryRepo->getProductsByCategory($catId);
+        $products = $data->products ?? [];
+        $category = [
+            "id" => $data->id,
+            "name" => $data->name,
+            "status" => $data->status
+        ];
+        return [$category, $products] ?? [];
     }
 }

@@ -1,5 +1,16 @@
-@extends('errors::minimal')
-
-@section('title', __('Server Error'))
-@section('code', '500')
-@section('message', __('Server Error'))
+@extends('frontend.layouts.app')
+@section('content')
+    <section class="page-404 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="error-content">
+                        <h2 class="mb-4">{{ $exception->getMessage() ?? "Something went wrong."}}</h2>
+                        <h1 class="mb-4">5<span class="text-muted">0</span>0</h1>
+                        <a href="{{route('home')}}" class="btn btn-main">Go Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@endsection

@@ -93,4 +93,21 @@ final readonly class CategoryRepo
             throw new Exception($ex->getMessage());
         }
     }
+
+    /**
+     * @param int $id
+     *
+     * @return Model|null
+     */
+    function getProductsByCategory(int $id) : Model|null
+    {
+        try {
+            $data = $this->model::with('products')
+                ->whereId($id)
+                ->first();
+            return $data;
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
 }

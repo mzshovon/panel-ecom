@@ -25,7 +25,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
                 @forelse (getCategoryList() as $category)
-                    <li><a href="">{{$category['name']}}</a></li>
+                    <li><a href="{{route('category-product', ['catId' => $category['id']])}}">{{$category['name']}}</a></li>
                 @empty
                     No category found!
                 @endforelse

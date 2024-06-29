@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
 Route::get('/product/{productId}', [FrontendProductController::class, 'singleProduct'])->name('single-product');
+Route::get('/category/{catId}', [FrontendProductController::class, 'porductsByCategory'])->name('category-product');
 
 Auth::routes();
 

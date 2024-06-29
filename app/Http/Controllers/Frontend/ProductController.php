@@ -30,4 +30,17 @@ class ProductController extends Controller
         }
         abort(Response::HTTP_NOT_FOUND, "Sorry Product Not Found!");
     }
+
+    function porductsByCategory(int $id)
+    {
+        try {
+            $data = [];
+            [$category, $products] = $this->repo->getProductListByCategoryId($id);
+            $data['category'] = $category;
+            $data['products'] = customPaginate($products, 10);
+            return view('frontend.products.category-products', $data);
+        } catch (Exception $ex) {
+            abort(Response::HTTP_NOT_FOUND, "Sorry Category Not Found!");
+        }
+    }
 }

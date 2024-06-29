@@ -8,5 +8,6 @@ interface ProductServiceInterface {
 
     function getProductList(int $num = 4):array;
     function getSingleProductById(int $id):Model|null;
+    function getProductListByCategoryId(int $catId):array;
 
 }
