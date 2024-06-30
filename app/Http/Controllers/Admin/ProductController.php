@@ -41,6 +41,7 @@ class ProductController extends Controller
             $data['page'] = self::CREATE_PAGE;
             $data['variants'] = $this->repo->getProductsVariants();
             $data['categories'] = $this->repo->getCategories();
+            $data['sections'] = config('product.sections');
             return view('admin.product.create', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
@@ -85,6 +86,7 @@ class ProductController extends Controller
             $data['variants'] = $this->repo->getProductsVariants();
             $data['categories'] = $this->repo->getCategories();
             $data['product'] = $this->repo->getProductById($id);
+            $data['sections'] = config('product.sections');
             return view('admin.product.edit', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
