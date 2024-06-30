@@ -160,6 +160,7 @@ class ProductService implements ProductServiceInterface
             'discount',
             'discount_type',
             'discount_level',
+            'sections',
             'created_by',
             'updated_by'
         ];

@@ -84,7 +84,17 @@
                                 @endforelse
                             </select>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-3">
+                            <label for="inputState" class="form-label">Sections</label>
+                            <select id="inputSection" name="sections[]" class="form-select category" multiple="multiple">
+                                @forelse ($sections as $section)
+                                    <option value="{{$section}}" {{in_array($section, $product->sections) ? 'selected' : ''}}>{{ucwords($section)}}</option>
+                                @empty
+                                    No data available!
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="col-3">
                             <label for="inputFormFile" class="form-label">Product Images <span class="text-danger">*</span></label>
                             <input class="form-control" name="images[]" type="file" id="formFile" multiple>
                         </div>
@@ -124,6 +134,7 @@
      $(document).ready(function() {
         $('#inputVariants').select2();
         $('#inputCategory').select2();
+        $('#inputSection').select2();
     });
 </script>
 

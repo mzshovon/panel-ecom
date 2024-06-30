@@ -31,6 +31,7 @@ class Product extends Model
         'height',
         'discount',
         'discount_type',
+        'sections',
         'variants',
         'created_by',
         'updated_by'
@@ -87,6 +88,17 @@ class Product extends Model
     {
         return Attribute::make(
             get: fn (string $value) => Carbon::parse($value)->format("h:i a, d-m-Y"),
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function sections(): Attribute
+    {
+        return Attribute::make(
+            set: fn (array $value) => implode(",", $value),
+            get: fn ($value) => json_decode($value, true)
         );
     }
 }
