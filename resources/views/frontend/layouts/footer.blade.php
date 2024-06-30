@@ -5,12 +5,12 @@
                 <div class="footer-widget">
                     <h4 class="mb-4"><img src="{{URL::to('/')}}/public/frontend/images/logo.png" alt="Vaxon."
                             class="img-fluid"></h4>
-                    <p class="lead">Welcome to Ecom Mart BD! Your trusted one-stop destination for all needs!
+                    <p class="lead">{{ config('website.slogan') ?? "Welcome to Ecom Mart BD! Your trusted one-stop destination for all needs!"}}
                     </p>
 
                     <div class="">
-                        <p class="mb-0"><strong>Location : </strong>Dhaka</p>
-                        <p><strong>Support Email : </strong> support@ecommartbd.com</p>
+                        <p class="mb-0"><strong>Location : </strong>{{config('website.address') ?? "Dhaka"}}</p>
+                        <p><strong>Support Email : </strong> {{ config('website.email') ?? "support@ecommartbd.com"}}</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         <li class="d-lg-flex justify-content-between">Sunday <span>9.00 A.M -9.00 P.M</span></li>
                     </ul>
 
-                    <h5>Call Now : +880 1407-325822</h5>
+                    <h5>Call Now : {{ config('website.mobile') ?? "+880 1407-325822"}}</h5>
                 </div>
             </div>
         </div>

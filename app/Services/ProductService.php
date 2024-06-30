@@ -54,4 +54,16 @@ class ProductService implements ProductServiceInterface
         ];
         return [$category, $products] ?? [];
     }
+
+
+    /**
+     * @param int $num
+     *
+     * @return array
+     */
+    public function searchProducts(string $keywords, int $num = 100) : array
+    {
+        $data = $this->productRepo->latest($num, $keywords);
+        return $data ?? [];
+    }
 }

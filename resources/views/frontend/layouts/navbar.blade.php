@@ -15,7 +15,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About Us</a>
+            <a class="nav-link" href="{{route('about')}}">About Us</a>
           </li>
           <!-- Pages -->
           <li class="nav-item dropdown dropdown-slide">
@@ -116,7 +116,13 @@
             </div>
           </div> --}}
         </li>
-        <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li>
+        @auth
+            <li class="list-inline-item"><a href="#"><i class="tf-ion-unlocked mr-3"></i></a></li>
+        @endauth
+
+        @guest
+            <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li>
+        @endguest
       </ul>
     </div>
   </nav>

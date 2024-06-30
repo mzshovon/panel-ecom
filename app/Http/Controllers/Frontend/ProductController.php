@@ -43,4 +43,15 @@ class ProductController extends Controller
             abort(Response::HTTP_NOT_FOUND, "Sorry Category Not Found!");
         }
     }
+
+    public function search(Request $request)
+    {
+        $keywords = $request->get("keywords") ?? null;
+        if(!$keywords) {
+            abort(404, "Please input valid keywords!");
+        }
+        $data['products'] = customPaginate($this->repo->searchProducts($keywords), 10);
+        $data['keywords'] = $keywords;
+        return view('frontend.products.category-products', $data);
+    }
 }

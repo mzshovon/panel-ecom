@@ -88,7 +88,7 @@
                             <label for="inputState" class="form-label">Sections</label>
                             <select id="inputSection" name="sections[]" class="form-select category" multiple="multiple">
                                 @forelse ($sections as $section)
-                                    <option value="{{$section}}" {{in_array($section, $product->sections) ? 'selected' : ''}}>{{ucwords($section)}}</option>
+                                    <option value="{{$section}}" {{!empty($product->sections) && in_array($section, $product->sections) ? 'selected' : ''}}>{{ucwords($section)}}</option>
                                 @empty
                                     No data available!
                                 @endforelse

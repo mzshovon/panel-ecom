@@ -9,12 +9,14 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="content text-center">
-                    <h1 class="mb-3">{{$category['name']}}</h1>
+                    <h1 class="mb-3">{{isset($category) ? $category['name'] : "Results of '{$keywords}'"}}</h1>
 
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-center">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{$category['name']}}</li>
+                            @if (isset($category))
+                                <li class="breadcrumb-item active" aria-current="page">{{$category['name']}}</li>
+                            @endif
                         </ol>
                     </nav>
                 </div>

@@ -22,4 +22,15 @@ class HomeService implements HomeServiceInterface
         $data = $this->productRepo->latest($num);
         return $data ?? [];
     }
+
+    /**
+     * @param int $num
+     *
+     * @return array
+     */
+    public function getUpcomingProducts(int $num = 3) : array
+    {
+        $data = $this->productRepo->upcoming($num);
+        return $data ?? [];
+    }
 }

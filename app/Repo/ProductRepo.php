@@ -46,12 +46,24 @@ final readonly class ProductRepo
     }
 
     /**
+     * @param int $num
+     * @param string|null|null $search
+     *
      * @return array
      */
-    function latest($num = 4) : array
+    function latest(int $num = 4, string $search = "") : array
     {
         try {
             $data = $this->model::with("updatedBy", "images")
+                ->where(function($query) {
+                    $query->where('sections', 'NOT LIKE', '%upcoming%')
+                        ->orWhereNull('sections');
+                })
+                ->when(!empty($search), function($q) use ($search){
+                    $q->where("name", "LIKE", "%{$search}%")
+                        ->orWhere("variants", "LIKE", "%{$search}%")
+                        ->orWhere("sections", "LIKE", "%{$search}%");
+                })
                 ->orderBy("updated_at", "desc")
                 ->get([
                     'id',
@@ -61,9 +73,35 @@ final readonly class ProductRepo
                     'price',
                     'previous_price',
                     'variants',
+                    'sections',
                     'tentative_delivery_date',
                     'updated_by',
                     'created_at'
+                ])
+                ->take($num)
+                ->toArray();
+            return !empty($data) ? $data : [];
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * @return array
+     */
+    function upcoming($num = 3) : array
+    {
+        try {
+            $data = $this->model::with("updatedBy", "images")
+                ->where('sections', 'LIKE', '%upcoming%')
+                ->orderBy("updated_at", "desc")
+                ->get([
+                    'id',
+                    'name',
+                    'sku',
+                    'stock',
+                    'price',
+                    'previous_price',
                 ])
                 ->take($num)
                 ->toArray();

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
+Route::get('/about', [HomePageController::class, 'about'])->name('about');
+Route::get('/search', [FrontendProductController::class, 'search'])->name('search');
 Route::get('/product/{productId}', [FrontendProductController::class, 'singleProduct'])->name('single-product');
 Route::get('/category/{catId}', [FrontendProductController::class, 'porductsByCategory'])->name('category-product');
 

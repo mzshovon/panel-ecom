@@ -1,55 +1,12 @@
 @extends('frontend.layouts.app')
+
 @section('content')
 
 @include('frontend.home.layouts.sliders')
 
-<section class="category section pt-3 pb-0">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4 col-sm-12 col-md-6">
-				<div class="cat-item mb-4 mb-lg-0">
-					<img src="{{URL::to('/')}}/public/frontend/images/about/cat-1.jpg" alt="" class="img-fluid">
-					<div class="item-info">
-						<p class="mb-0">Stylish Leather watch</p>
-						<h4 class="mb-4">up to <strong>50% </strong>off</h4>
-
-						<a href="#" class="read-more">Shop now</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-sm-12 col-md-6">
-				<div class="cat-item mb-4 mb-lg-0">
-					<img src="{{URL::to('/')}}/public/frontend/images/about/cat-2.jpg" alt="" class="img-fluid">
-
-					<div class="item-info">
-						<p class="mb-0">Ladies hand bag</p>
-						<h4 class="mb-4">up to <strong>40% </strong>off</h4>
-
-						<a href="#" class="read-more">Shop now</a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4 col-sm-12 col-md-6">
-				<div class="cat-item">
-					<img src="{{URL::to('/')}}/public/frontend/images/about/cat-3.jpg" alt="" class="img-fluid">
-					<div class="item-info">
-						<p class="mb-0">Trendy shoe</p>
-						<h4 class="mb-4">up to <strong>50% </strong>off</h4>
-
-						<a href="#" class="read-more">Shop now</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+@include('frontend.home.layouts.upcoming')
 
 @include('frontend.home.layouts.latest')
-<!-- /portfolio -->
-
-
 
 <section class="ads section">
 	<div class="container">
@@ -80,47 +37,6 @@
 	</div>
 </section>
 
-<section class="features border-top">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-sm-6 col-md-6">
-				<div class="feature-block">
-					<i class="tf-ion-android-bicycle"></i>
-					<div class="content">
-						<h5>Free Shipping</h5>
-						<p>On all order over $39.00</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6 col-md-6">
-				<div class="feature-block">
-					<i class="tf-wallet"></i>
-					<div class="content">
-						<h5>30 Days Return</h5>
-						<p>Money back Guarantee</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6 col-md-6">
-				<div class="feature-block">
-					<i class="tf-key"></i>
-					<div class="content">
-						<h5>Secure Checkout</h5>
-						<p>100% Protected by paypal</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-sm-6 col-md-6">
-				<div class="feature-block">
-					<i class="tf-clock"></i>
-					<div class="content">
-						<h5>24/7 Support</h5>
-						<p>All time customer support </p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+@include('frontend.home.layouts.services')
 
 @endsection

@@ -17,6 +17,14 @@ class HomePageController extends Controller
     {
         $data = [];
         $data['latest_products'] = $this->repo->getLatestProductList();
+        $data['upcoming_products'] = $this->repo->getUpcomingProducts();
         return view('frontend.home.homepage', $data);
     }
+
+    public function about()
+    {
+        $data = [];
+        return view('frontend.home.about', $data);
+    }
+
 }
