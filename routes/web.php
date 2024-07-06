@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,11 @@ Route::get('/about', [HomePageController::class, 'about'])->name('about');
 Route::get('/search', [FrontendProductController::class, 'search'])->name('search');
 Route::get('/product/{productId}', [FrontendProductController::class, 'singleProduct'])->name('single-product');
 Route::get('/category/{catId}', [FrontendProductController::class, 'porductsByCategory'])->name('category-product');
+
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 Auth::routes();
 

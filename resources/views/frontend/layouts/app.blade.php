@@ -51,6 +51,7 @@
 
     <!-- Main Js File -->
     <script src="{{URL::to('/')}}/public/frontend/js/script.js"></script>
+    <script src="{{URL::to('/')}}/public/frontend/js/custom.js"></script>
     @stack('script')
 </body>
 </html>

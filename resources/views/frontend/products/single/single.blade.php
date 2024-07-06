@@ -34,7 +34,13 @@
 
 					<hr>
 
-					<h3 class="product-price">{{(int)$product->price}} TK. <del>{{$product->previous_price}} TK.</del></h3>
+					<h3 class="product-price">
+                        @if ($product->stock == 0)
+                            Out of stock!
+                        @else
+                            {{(int)$product->price}} TK. <del>{{$product->previous_price}} TK.</del>
+                         @endif
+                    </h3>
 
 					<p class="product-description my-4 ">
                         {!! $product->short_description ?? "" !!}
@@ -67,7 +73,7 @@
 						<div class="product-category d-flex align-items-center">
 							<span class="font-weight-bold text-capitalize product-meta-title">Categories :</span>
                             @forelse ($product->categories as $category)
-                                <a href="#" class="badge badge-info">{{$category->name}}</a>
+                                <a href="{{route('category-product', ['catId' => $category->id])}}" class="badge badge-info">{{$category->name}}</a>
                             @empty
                             @endforelse
 						</div>

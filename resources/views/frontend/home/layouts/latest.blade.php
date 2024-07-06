@@ -23,18 +23,27 @@
                     </a>
                     @endforeach
                 </div>
+
                 @if ($product['stock'] > 0)
                     <span class="onsale">Sale</span>
                 @endif
+
                 <div class="product-hover-overlay">
-                    <a href="#"><i class="tf-ion-android-cart"></i></a>
+                    <a onclick="addToCart('{{route('cart.add')}}', '{{csrf_token()}}', {{$product['id']}}, 1)">
+                        <i class="tf-ion-android-cart" style="color:white"></i>
+                    </a>
                     <a href="#"><i class="tf-ion-ios-heart"></i></a>
-                    </div>
+                </div>
 
                 <div class="product-info">
                     <h2 class="product-title h5 mb-0"><a href="product-single.html">{{$product['name']}}</a></h2>
                     <span class="price">
-                        {{$product['price']}} TK.
+                        @if ($product['stock'] == 0)
+                            Out of stock!
+                        @else
+                            {{$product['price']}} TK.
+                        @endif
+
                     </span>
                 </div>
             </div>

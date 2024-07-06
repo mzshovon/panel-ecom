@@ -1,7 +1,7 @@
 <div class="search-wrap">
     <div class="overlay">
       <form action="{{route('search')}}" method="get" class="search-form">
-        @csrf
+        {{-- @csrf --}}
         <div class="container">
           <div class="row">
             <div class="col-md-10 col-9">

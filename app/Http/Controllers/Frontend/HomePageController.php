@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 
 class HomePageController extends Controller
 {
-    public function __construct(private HomeServiceInterface $repo)
-    {
-
-    }
+    public function __construct(private HomeServiceInterface $repo){}
 
     public function home()
     {
