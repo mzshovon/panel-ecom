@@ -29,9 +29,11 @@
                 @endif
 
                 <div class="product-hover-overlay">
-                    <a onclick="addToCart('{{route('cart.add')}}', '{{csrf_token()}}', {{$product['id']}}, 1)">
-                        <i class="tf-ion-android-cart" style="color:white"></i>
-                    </a>
+                    @if ($product['stock'] > 0)
+                        <a onclick="addToCart('{{route('cart.add')}}', '{{csrf_token()}}', {{$product['id']}}, 1)">
+                            <i class="tf-ion-android-cart" style="color:white"></i>
+                        </a>
+                        @endif
                     <a href="#"><i class="tf-ion-ios-heart"></i></a>
                 </div>
 

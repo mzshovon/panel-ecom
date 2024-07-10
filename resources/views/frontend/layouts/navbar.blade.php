@@ -75,47 +75,19 @@
             <i class="tf-ion-android-cart"></i>
                 <span id="cart-count">0</span>
           </a>
-          {{-- <div class="dropdown-menu cart-dropdown">
-            <!-- Cart Item -->
-            <div class="media">
-              <a href="#">
-                <img class="media-object img- mr-3" src="{{URL::to('/')}}/public/frontend/images/shop/cart/cart-1.jpg" alt="image" />
-              </a>
-              <div class="media-body">
-                <h6>Ladies Bag</h6>
-                <div class="cart-price">
-                  <span>1 x</span>
-                  <span>1250.00</span>
-                </div>
-              </div>
-              <a href="#" class="remove"><i class="tf-ion-close"></i></a>
-            </div><!-- / Cart Item -->
+          <div class="dropdown-menu cart-dropdown">
 
-            <!-- Cart Item -->
-            <div class="media">
-              <a href="#">
-                <img class="media-object img-fluid mr-3" src="{{URL::to('/')}}/public/frontend/images/shop/cart/cart-2.jpg" alt="image" />
-              </a>
-              <div class="media-body">
-                <h6>Skinny Jeans</h6>
-                <div class="cart-price">
-                  <span>1 x</span>
-                  <span>1250.00</span>
-                </div>
-              </div>
-              <a href="#" class="remove"><i class="tf-ion-close"></i></a>
-            </div><!-- / Cart Item -->
 
             <div class="cart-summary">
               <span class="h6">Total</span>
-              <span class="total-price h6">$1799.00</span>
+              <span class="total-price h6">0</span>
 
               <div class="text-center cart-buttons mt-3">
                 <a href="cart.html" class="btn btn-small btn-transparent btn-block">View Cart</a>
                 <a href="checkout.html" class="btn btn-small btn-main btn-block">Checkout</a>
               </div>
             </div>
-          </div> --}}
+          </div>
         </li>
         @auth
             <li class="list-inline-item"><a href="#"><i class="tf-ion-unlocked mr-3"></i></a></li>
