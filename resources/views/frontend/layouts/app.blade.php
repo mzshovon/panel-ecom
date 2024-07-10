@@ -26,6 +26,7 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{URL::to('/')}}/public/frontend/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body id="body">
     @include('frontend.layouts.navbar')
@@ -54,6 +55,7 @@
     <!-- Main Js File -->
     <script src="{{URL::to('/')}}/public/frontend/js/script.js"></script>
     <script src="{{URL::to('/')}}/public/frontend/js/custom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         getCartItems("{{route('cart.items')}}", "{{URL::to("/")}}");
     </script>

@@ -16,25 +16,24 @@ class CartController extends Controller
     {
         $cart = $this->repo->getCartProducts();
         // return view('cart.index', compact('cart'));
-        return response()->json(['success' => 'items found', 'cart' => $cart, 'image_path' => URL::to('/')]);
+        return response()->json(['message' => 'items found', 'cart' => $cart, 'image_path' => URL::to('/')]);
     }
 
     public function add(Request $request)
     {
-
-        [$message, $cartData] = $this->repo->addCartProducts($request->all());
-        return response()->json(['success' => $message, 'cart' => $cartData, 'image_path' => URL::to('/')]);
+        [$statusCode, $message, $cartData] = $this->repo->addCartProducts($request->all());
+        return response()->json(['message' => $message, 'cart' => $cartData, 'image_path' => URL::to('/')], $statusCode);
     }
 
     public function update(Request $request)
     {
-        [$message, $cartData] = $this->repo->updateCartProducts($request->all());
-        return response()->json(['success' => $message, 'cart' => $cartData, 'image_path' => URL::to('/')]);
+        [$statusCode, $message, $cartData] = $this->repo->updateCartProducts($request->all());
+        return response()->json(['message' => $message, 'cart' => $cartData, 'image_path' => URL::to('/')], $statusCode);
     }
 
     public function remove(Request $request)
     {
-        [$message, $cartData] = $this->repo->deleteCartProducts($request->all());
-        return response()->json(['success' => $message, 'cart' => $cartData, 'image_path' => URL::to('/')]);
+        [$statusCode, $message, $cartData] = $this->repo->deleteCartProducts($request->all());
+        return response()->json(['message' => $message, 'cart' => $cartData, 'image_path' => URL::to('/')], $statusCode);
     }
 }

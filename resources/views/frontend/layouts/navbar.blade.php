@@ -73,7 +73,7 @@
         <li class="dropdown cart-nav dropdown-slide list-inline-item">
           <a href="#" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-hover="dropdown">
             <i class="tf-ion-android-cart"></i>
-                <span id="cart-count">0</span>
+                <span id="cart-count">{{cartCount()}}</span>
           </a>
           <div class="dropdown-menu cart-dropdown">
 

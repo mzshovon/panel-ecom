@@ -7,6 +7,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 if (!function_exists('customPaginate')) {
     /**
@@ -136,5 +137,24 @@ if (!function_exists('numberToOrdinal')) {
         ];
 
         return isset($ordinals[$number]) ? $ordinals[$number] : "{$number}th";
+    }
+
+}
+if (!function_exists('cartCount')) {
+    /**
+     * Use if your filtering logic is:
+     * If user doesn't select from and to, then it returns null
+     *
+     * @return int
+     */
+    function cartCount() {
+        $cart = Session::get('cart', []);
+        $count = 0;
+        if(!empty($cart)) {
+            foreach ($cart as $key => $value) {
+                $count += $value['quantity'];
+            }
+        }
+        return $count;
     }
 }
