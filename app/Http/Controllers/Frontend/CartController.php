@@ -15,8 +15,19 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->repo->getCartProducts();
-        // return view('cart.index', compact('cart'));
         return response()->json(['message' => 'items found', 'cart' => $cart, 'image_path' => URL::to('/')]);
+    }
+
+    public function viewCart()
+    {
+        $data['carts'] = $this->repo->getCartProducts();
+        return view('frontend.cart.view', $data);
+    }
+
+    public function checkout()
+    {
+        $data['carts'] = $this->repo->getCartProducts();
+        return view('frontend.cart.checkout', $data);
     }
 
     public function add(Request $request)

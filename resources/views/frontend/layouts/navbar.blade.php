@@ -33,7 +33,7 @@
           </li><!-- /Pages -->
           <!-- / Blog -->
 
-          <li class="nav-item dropdown dropdown-slide">
+          {{-- <li class="nav-item dropdown dropdown-slide">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-delay="350"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Shop.
@@ -45,18 +45,19 @@
               <li><a href="cart.html">Cart</a></li>
               <li><a href="confirmation.html">Confirmation</a></li>
             </ul>
-          </li><!-- / Blog -->
+          </li><!-- / Blog --> --}}
 
-          <!-- Account -->
-          <li class="nav-item dropdown dropdown-slide">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-delay="350"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Account.
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
-
-            </ul>
-          </li><!-- / Account -->
+          @auth
+            <!-- Account -->
+            <li class="nav-item dropdown dropdown-slide">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-delay="350"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account.
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
+                </ul>
+            </li><!-- / Account -->
+          @endauth
 
           <li class="nav-item">
             <a class="nav-link" href="contact.html">Contact Us</a>
@@ -83,18 +84,18 @@
               <span class="total-price h6">0</span>
 
               <div class="text-center cart-buttons mt-3">
-                <a href="cart.html" class="btn btn-small btn-transparent btn-block">View Cart</a>
-                <a href="checkout.html" class="btn btn-small btn-main btn-block">Checkout</a>
+                <a href="{{route('cart.page')}}" class="btn btn-small btn-transparent btn-block">View Cart</a>
+                <a href="{{route('cart.checkout')}}" class="btn btn-small btn-main btn-block">Checkout</a>
               </div>
             </div>
           </div>
         </li>
         @auth
-            <li class="list-inline-item"><a href="#"><i class="tf-ion-unlocked mr-3"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li>
         @endauth
 
         @guest
-            <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="tf-ion-unlocked mr-3"></i></a></li>
         @endguest
       </ul>
     </div>

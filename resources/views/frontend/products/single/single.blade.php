@@ -46,12 +46,10 @@
                         {!! $product->short_description ?? "" !!}
 					</p>
                     @if ($product->stock > 0)
-					<form class="cart" action="#" method="post">
 						<div class="quantity d-flex align-items-center">
 							<input type="number" id="quantity_{{$product['id']}}" class="input-text qty text form-control w-25 mr-3" step="1" min="1" max="9" name="quantity" value="1" title="Qty" size="4" >
-							<a href="#" class="btn btn-main btn-small" onclick="addInputValueToCart('{{route('cart.add')}}', '{{csrf_token()}}', {{$product['id']}}, 1)">Add to cart</a>
+							<button class="btn btn-main btn-small" onclick="addInputValueToCart('{{route('cart.add')}}', '{{csrf_token()}}', {{$product['id']}}, 1)">Add to cart</button>
 						</div>
-					</form>
                     @endif
 
 					<div class="color-swatches mt-4 d-flex align-items-center">
