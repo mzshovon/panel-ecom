@@ -54,4 +54,15 @@ class ProductController extends Controller
         $data['keywords'] = $keywords;
         return view('frontend.products.category-products', $data);
     }
+
+    public function storeProductReview(Request $request)
+    {
+        $keywords = $request->get("keywords") ?? null;
+        if(!$keywords) {
+            abort(404, "Please input valid keywords!");
+        }
+        $data['products'] = customPaginate($this->repo->searchProducts($keywords), 10);
+        $data['keywords'] = $keywords;
+        return view('frontend.products.category-products', $data);
+    }
 }

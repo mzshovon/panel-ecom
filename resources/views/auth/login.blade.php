@@ -20,7 +20,7 @@
                             <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
                         </div>
                         @include('admin.layouts.partials.alerts')
-                        <form class="row g-3 needs-validation" method="post" action="{{route('login')}}">
+                        <form class="row g-3 needs-validation" method="post" action="{{route('admin.login')}}">
                             @csrf
                             <div class="col-12">
                                 <label for="yourUsername" class="form-label">Username</label>

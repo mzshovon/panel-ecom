@@ -95,7 +95,7 @@
         @endauth
 
         @guest
-            <li class="list-inline-item"><a href="#"><i class="tf-ion-unlocked mr-3"></i></a></li>
+            <li class="list-inline-item"><a href="{{route('login')}}"><i class="tf-ion-unlocked mr-3"></i></a></li>
         @endguest
       </ul>
     </div>

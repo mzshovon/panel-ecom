@@ -60,6 +60,6 @@
         getCartItems("{{route('cart.items')}}", "{{URL::to("/")}}");
     </script>
 
-    @stack('script')
+    @yield('script')
 </body>
 </html>
