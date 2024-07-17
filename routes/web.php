@@ -22,10 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
-Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
-
+// User auth routes
 Route::get('/signup', [CustomLoginController::class, 'showSignupForm'])->name('signup');
 Route::post('/signup', [CustomLoginController::class, 'showSignupForm'])->name('signup');
 Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
@@ -33,8 +30,9 @@ Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
 Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomePageController::class, 'home'])->name('home');
-
 Route::get('/about', [HomePageController::class, 'about'])->name('about');
+Route::get('/contact-us', [HomePageController::class, 'contactUs'])->name('contact-us');
+Route::post('/contact-us', [HomePageController::class, 'storeContactUs'])->name('contact-us');
 Route::get('/search', [FrontendProductController::class, 'search'])->name('search');
 Route::get('/product/{productId}', [FrontendProductController::class, 'singleProduct'])->name('single-product');
 Route::post('/product/review', [FrontendProductController::class, 'storeProductReview'])->name('store-review');
@@ -47,8 +45,12 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.items');
 Route::get('/cart/page', [CartController::class, 'viewCart'])->name('cart.page');
 Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
+// Admin auth routes
+Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
+Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resources([

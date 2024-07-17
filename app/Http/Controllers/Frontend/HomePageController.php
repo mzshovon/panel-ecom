@@ -24,4 +24,25 @@ class HomePageController extends Controller
         return view('frontend.home.about', $data);
     }
 
+    public function contactUs()
+    {
+        $data = [];
+        return view('frontend.contact.view', $data);
+    }
+
+    public function storeContactUs(Request $request)
+    {
+        try{
+            $data = $this->repo->storeContactUs($request->all());
+
+            if($data) {
+                return redirect()->back()->with("success", "Your message has been sent successfully!");
+            } else {
+                return redirect()->back()->with("error", "Something went wrong while sending message!");
+            }
+        } catch (\Exception $ex) {
+            return redirect()->back()->with("error", $ex->getMessage());
+        }
+    }
+
 }

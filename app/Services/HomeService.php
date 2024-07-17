@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\HomeServiceInterface;
+use App\Models\ContactUs;
 use App\Repo\ProductRepo;
 
 class HomeService implements HomeServiceInterface
@@ -32,5 +33,16 @@ class HomeService implements HomeServiceInterface
     {
         $data = $this->productRepo->upcoming($num);
         return $data ?? [];
+    }
+
+    /**
+     * @param array $request
+     *
+     * @return bool
+     */
+    public function storeContactUs(array $request) : bool
+    {
+        $data = ContactUs::create($request);
+        return $data ? true : false;
     }
 }

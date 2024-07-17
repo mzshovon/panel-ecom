@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="product-info">
-                    <h2 class="product-title h5 mb-0"><a href="product-single.html">{{$product['name']}}</a></h2>
+                    <h2 class="product-title h5 mb-0"><a href="{{route('single-product', ['productId'=>$product['id']])}}">{{$product['name']}}</a></h2>
                     <span class="price">
                         @if ($product['stock'] == 0)
                             Out of stock!

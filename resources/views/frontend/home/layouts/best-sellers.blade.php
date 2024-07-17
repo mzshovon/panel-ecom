@@ -9,7 +9,7 @@
                     class="img-fluid mr-3">
             </a>
             <div class="media-body">
-                <h6 class="featured-entry-title mb-0"><a href="product-single.html">{{$product['name']}}</a></h6>
+                <h6 class="featured-entry-title mb-0"><a href="{{route('single-product', ['productId'=>$product['id']])}}">{{$product['name']}}</a></h6>
                 <p class="featured-entry-meta">{{$product['price']}} TK.</p>
             </div>
         </div>

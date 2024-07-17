@@ -47,6 +47,16 @@
             </ul>
           </li><!-- / Blog --> --}}
 
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('contact-us')}}">Contact Us</a>
+          </li>
+
+          @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('login')}}">Login</a>
+            </li>
+          @endguest
+
           @auth
             <!-- Account -->
             <li class="nav-item dropdown dropdown-slide">
@@ -59,9 +69,6 @@
             </li><!-- / Account -->
           @endauth
 
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact Us</a>
-          </li>
         </ul>
       </div>
       <!-- Navbar-collapse -->
@@ -91,11 +98,16 @@
           </div>
         </li>
         @auth
-            <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li>
+            {{-- <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li> --}}
+            <li class="list-inline-item"><a href="{{route('logout')}}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"><i class="tf-ion-log-out mr-3"></i></a></li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         @endauth
 
         @guest
-            <li class="list-inline-item"><a href="{{route('login')}}"><i class="tf-ion-unlocked mr-3"></i></a></li>
+            <li class="list-inline-item"><a href="{{route('login')}}"><i class="tf-ion-log-in mr-3"></i></a></li>
         @endguest
       </ul>
     </div>
