@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
+use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,14 +51,17 @@ Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('adm
 Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
 Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {
+Route::group(['middleware' => ['auth', 'role:user']], function() {
+    Route::get('/dashboard', [FrontendUserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/orders', [FrontendUserController::class, 'orders'])->name('orders');
+});
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resources([
         'users' => UserController::class,
         'products' => ProductController::class,
     ]);
-
     Route::put('/users/status/{user}', [UserController::class, 'statusChange'])->name('users.status.change');
 });
 

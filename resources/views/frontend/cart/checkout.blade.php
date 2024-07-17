@@ -74,11 +74,9 @@
                                     <div class="form-group mb-4">
                                         <label for="company_name">Division <span class="text-danger">*</span></label>
                                         <select class="form-control">
-                                            <option value="">Select an Option</option>
-                                            <option value="January">January</option>
-                                            <option value="February">February</option>
-                                            <option value="March">March</option>
-                                            <option value="April">April</option>
+                                            @foreach (config('website.user.division') as $division)
+                                                <option value="{{$division}}">{{$division}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -129,10 +127,12 @@
                     <div class="product-checkout-details mt-5 mt-lg-0">
                         <h4 class="mb-4 border-bottom pb-4">Order Summary</h4>
                         @php
+                            $subTotalAmount = 0;
                             $totalAmount = 0;
                         @endphp
                         @forelse ($carts as $cart)
                             @php
+                                $subTotalAmount += $cart['product']['price'];
                                 $totalAmount += $cart['product']['price'];
                             @endphp
                             <div class="media product-card">
@@ -149,7 +149,7 @@
                         <ul class="summary-prices list-unstyled mb-4">
                             <li class="d-flex justify-content-between">
                                 <span>Subtotal:</span>
-                                <span class="h5">{{$totalAmount}} TK.</span>
+                                <span class="h5">{{$subTotalAmount}} TK.</span>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span>Shipping:</span>
@@ -157,45 +157,43 @@
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span>Total</span>
-                                <span class="h5">$250</span>
+                                <span class="h5">{{$totalAmount}} TK.</span>
                             </li>
                         </ul>
 
                         <form action="#">
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                    value="option1" checked>
+                                    value="option1" disabled>
                                 <label class="form-check-label" for="exampleRadios1">
                                     Direct bank transfer
                                 </label>
 
                                 <div class="alert alert-secondary mt-3" role="alert">
-                                    Make your payment directly into our bank account. Please use your Order ID as the
-                                    payment reference. Your order will not be shipped until the funds have cleared in
-                                    our account.
+                                    We are offering cash on delivery service.
                                 </div>
                             </div>
 
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                    value="option2">
+                                    value="option2" checked>
                                 <label class="form-check-label" for="exampleRadios2">
-                                    Check payments
+                                    Cash On Delivery
                                 </label>
                             </div>
 
-                            <div class="form-check mb-3">
+                            {{-- <div class="form-check mb-3">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck3">
                                 <label class="form-check-label" for="exampleCheck3">I have read and agree to the website
                                     terms and conditions *</label>
-                            </div>
+                            </div> --}}
                         </form>
 
-                        <div class="info mt-4 border-top pt-4 mb-5">
+                        {{-- <div class="info mt-4 border-top pt-4 mb-5">
                             Your personal data will be used to process your order, support your experience throughout
                             this website, and for other purposes described in our <a href="#">privacy policy</a>.
-                        </div>
-                        <a href="#" class="btn btn-main btn-small">Place Order</a>
+                        </div> --}}
+                        <button class="btn btn-main btn-small" disabled>Place Order</button>
                     </div>
                 </div>
             </div>

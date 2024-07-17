@@ -60,11 +60,15 @@
           @auth
             <!-- Account -->
             <li class="nav-item dropdown dropdown-slide">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-delay="350"
+                <a class="nav-link dropdown-toggle" href="{{route('dashboard')}}" id="navbarDropdown5" role="button" data-delay="350"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Account.
+                Account
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
+                    <li><a href="{{route('dashboard')}}">Dahsboard</a></li>
+                    <li><a href="{{route('orders')}}">Orders</a></li>
+                    <li><a href="address.html">Address</a></li>
+                    <li><a href="profile-details.html">Profile Details</a></li>
                 </ul>
             </li><!-- / Account -->
           @endauth

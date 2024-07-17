@@ -117,9 +117,9 @@
 	</div> <!-- end container -->
 </section>
 
-<div class="google-map">
+{{-- <div class="google-map">
 	<div id="map"></div>
-</div>
+</div> --}}
 
 @endsection
 

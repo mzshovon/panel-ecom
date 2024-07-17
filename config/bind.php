@@ -7,5 +7,6 @@ return [
         'App\\Contracts\\HomeServiceInterface' => 'App\\Services\\HomeService',
         'App\\Contracts\\ProductServiceInterface' => 'App\\Services\\ProductService',
         'App\\Contracts\\CartServiceInterface' => 'App\\Services\\CartService',
+        'App\\Contracts\\UserServiceInterface' => 'App\\Services\\UserService',
     ]
 ];
