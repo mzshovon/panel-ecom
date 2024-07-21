@@ -44,7 +44,6 @@ Route::post('/cart/update', [CartController::class, 'update'])->name('cart.updat
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.items');
 Route::get('/cart/page', [CartController::class, 'viewCart'])->name('cart.page');
-Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 // Admin auth routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
@@ -54,6 +53,8 @@ Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.lo
 Route::group(['middleware' => ['auth', 'role:user']], function() {
     Route::get('/dashboard', [FrontendUserController::class, 'dashboard'])->name('dashboard');
     Route::get('/orders', [FrontendUserController::class, 'orders'])->name('orders');
+    Route::post('/orders', [FrontendUserController::class, 'placeOrder'])->name('orders');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {

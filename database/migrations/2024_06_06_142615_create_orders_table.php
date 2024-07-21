@@ -25,7 +25,7 @@ return new class extends Migration
             $table->longText('address')->nullable(true);
             $table->longText('notes')->nullable(true);
             $table->bigInteger('created_by');
-            $table->bigInteger('updated_by');
+            $table->bigInteger('updated_by')->nullable(true);
             $table->timestamps();
         });
     }

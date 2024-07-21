@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->bigInteger('created_by');
-            $table->bigInteger('updated_by');
+            $table->bigInteger('updated_by')->nullable(true);
             $table->timestamps();
         });
     }

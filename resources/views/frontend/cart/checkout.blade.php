@@ -34,38 +34,39 @@
 
                     <div class="billing-details mt-5">
                         <h4 class="mb-4">Billing Details</h4>
-                        <form class="checkout-form">
+                        <form class="checkout-form" method="POST" action="{{route('orders')}}">
+                            @csrf
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="first_name">First Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="first_name" placeholder="">
+                                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="last_name" placeholder="">
+                                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="first_name">Contact Number <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="phone" placeholder="">
+                                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="first_name">Email address </label>
-                                        <input type="text" class="form-control" id="email" placeholder="">
+                                        <input type="text" class="form-control" name="email" id="email" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
                                         <label for="first_name">Address <span class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="msg" cols="30" rows="3"
+                                        <textarea class="form-control" name="address" id="msg" cols="30" rows="3"
                                             placeholder="Address on house no, lane etc."></textarea>
                                     </div>
                                 </div>
@@ -73,7 +74,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="company_name">Division <span class="text-danger">*</span></label>
-                                        <select class="form-control">
+                                        <select class="form-control" name="division">
                                             @foreach (config('website.user.division') as $division)
                                                 <option value="{{$division}}">{{$division}}</option>
                                             @endforeach
@@ -84,31 +85,31 @@
                                 <div class="col-lg-6">
                                     <div class="form-group mb-4">
                                         <label for="first_name">Town / City </label>
-                                        <input type="text" class="form-control" id="city" placeholder="Apartment">
+                                        <input type="text" class="form-control" name="city" id="city" placeholder="Apartment">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
                                         <label for="first_name">Area</label>
-                                        <input type="text" class="form-control" id="street" placeholder="">
+                                        <input type="text" class="form-control" name="area" id="street" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group mb-4">
                                         <label for="first_name">Order notes (optional)</label>
-                                        <textarea class="form-control" id="msg" cols="30" rows="5"
+                                        <textarea class="form-control" name="notes" id="msg" cols="30" rows="5"
                                             placeholder="Notes about order e:g: want to say something"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="form-check mb-4">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                         <label class="form-check-label" for="exampleCheck1">Create an account?</label>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="form-check mb-4">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck2">
@@ -118,7 +119,7 @@
                                 </div>
 
                             </div>
-                        </form>
+                        {{-- </form> --}}
                     </div>
                 </div>
 
@@ -161,7 +162,7 @@
                             </li>
                         </ul>
 
-                        <form action="#">
+                        {{-- <form action="#"> --}}
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
                                     value="option1" disabled>
@@ -175,8 +176,8 @@
                             </div>
 
                             <div class="form-check mb-3">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                    value="option2" checked>
+                                <input class="form-check-input" type="radio" name="payment_type" id="exampleRadios2"
+                                    value="cash on delivery" checked>
                                 <label class="form-check-label" for="exampleRadios2">
                                     Cash On Delivery
                                 </label>
@@ -187,13 +188,14 @@
                                 <label class="form-check-label" for="exampleCheck3">I have read and agree to the website
                                     terms and conditions *</label>
                             </div> --}}
-                        </form>
+
 
                         {{-- <div class="info mt-4 border-top pt-4 mb-5">
                             Your personal data will be used to process your order, support your experience throughout
                             this website, and for other purposes described in our <a href="#">privacy policy</a>.
                         </div> --}}
-                        <button class="btn btn-main btn-small" disabled>Place Order</button>
+                        <button type="submit" class="btn btn-main btn-small">Place Order</button>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -218,4 +220,17 @@
     </div>
 </div>
 
+@endsection
+
+@section('script')
+    @if ($errors->any())
+        @php
+            $errorMessages = $errors->all();
+        @endphp
+        <script>
+            let errorMessages = {!! json_encode($errorMessages) !!};
+            let errorMessage = errorMessages.join("\n");
+            showErrorAlert(errorMessage);
+        </script>
+    @endif
 @endsection
