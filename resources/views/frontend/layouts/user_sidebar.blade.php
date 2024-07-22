@@ -6,7 +6,7 @@
         <a class="nav-link {{ in_array($route, ['dashboard']) ? 'active' : '' }}" href="{{route('dashboard')}}" >Dashboard</a>
     </div>
     <div class="nav flex-column nav-pills">
-        <a class="nav-link {{ in_array($route, ['orders']) ? 'active' : '' }}" href="{{route('orders')}}" >Orders</a>
+        <a class="nav-link {{ in_array($route, ['user.orders']) ? 'active' : '' }}" href="{{route('user.orders')}}" >Orders</a>
     </div>
     <div class="nav flex-column nav-pills">
         <a class="nav-link" href="address.html" >Address</a>

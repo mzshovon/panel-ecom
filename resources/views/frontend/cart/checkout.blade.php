@@ -233,4 +233,15 @@
             showErrorAlert(errorMessage);
         </script>
     @endif
+
+    @if (session('error'))
+        <script>
+            showErrorAlert('{{session('error')}}');
+        </script>
+    @endif
+    @if (session('success'))
+        <script>
+            showSuccessAlert('{{session('success')}}');
+        </script>
+    @endif
 @endsection

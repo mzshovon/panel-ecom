@@ -62,4 +62,9 @@ class User extends Authenticatable implements LaratrustUser
     {
         return \Carbon\Carbon::parse($value)->format('d-m-Y');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, "created_by", "id")->orderBy("orders.id", "desc");
+    }
 }

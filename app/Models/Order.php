@@ -24,4 +24,20 @@ class Order extends Model
         "created_by",
         "updated_by",
     ];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    // Accessor for updated_at
+    public function getUpdatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(OrderProduct::class, 'order_id', 'id');
+    }
 }

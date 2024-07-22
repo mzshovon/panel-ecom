@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Contracts\CartServiceInterface;
+use App\Models\OrderProduct;
+use App\Repo\OrderRepo;
 use App\Repo\ProductRepo;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +15,8 @@ class CartService implements CartServiceInterface
     private string $stockFilled = "No more unit available for this product";
 
     public function __construct(
-        private readonly ProductRepo $productRepo
+        private readonly ProductRepo $productRepo,
+        private readonly OrderRepo $orderRepo
     )
     {}
 
@@ -88,4 +91,57 @@ class CartService implements CartServiceInterface
         }
          return [Response::HTTP_OK, "Product removed from cart!", $cart];
     }
+
+
+    /**
+     * @param array $request
+     *
+     * @return bool
+     */
+    function placeOrder(array $request): bool
+    {
+        $cart = Session::get('cart', []);
+        if(isset($request['first_name']) && isset($request['last_name'])) {
+            $request['name'] = "{$request['first_name']} {$request['last_name']}";
+            unset($request['first_name']);
+            unset($request['last_name']);
+        } else {
+            $request['name'] =  auth()->user()->name;
+        }
+        [$totalQuantity, $totalAmount, $orderProducts] = $this->sumCartData($cart);
+        $request['created_by'] = auth()->user()?->id ?: null;
+        $request['quantity'] = $totalQuantity;
+        $request['total_amount'] = $totalAmount;
+        $request['total_discount'] = 0;
+        $request['shipping_charge'] = 80;
+        $request['total_amount_after_discount'] = $totalAmount + $request['shipping_charge'] - 0;
+        $store = $this->orderRepo->create($request);
+        if($store) {
+            foreach ($orderProducts as $product) {
+                $product['order_id'] = $store->id;
+                OrderProduct::create($product);
+            }
+            Session::forget('cart');
+            return true;
+        }
+        return false;
+    }
+
+    private function sumCartData($cart):array
+    {
+        $totalQuantity = collect($cart)->sum('quantity');
+        $totalAmount = 0;
+        $orderProducts = [];
+        foreach ($cart as $key => $cartData) {
+            $totalAmount += ($cartData['quantity'] * $cartData['product']['price']) - 0;
+            $orderProducts[] = [
+                "product_id" => $cartData['product']['id'],
+                "quantity" => $cartData['quantity'],
+                "price" => $cartData['product']['price'],
+                "created_by" => auth()->user()?->id ?: null,
+            ];
+        }
+        return [$totalQuantity, $totalAmount, $orderProducts];
+    }
+
 }

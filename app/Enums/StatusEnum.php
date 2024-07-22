@@ -12,8 +12,12 @@ enum StatusEnum: string {
     case Pending = 'pending';
     case Freeze = 'freeze';
     case Paused = 'paused';
-    case AssignedForDelivery = 'assigned_for_delivery';
-    case OutForDelivery = 'out_for_delivery';
+    case AssignedForDelivery = 'assigned for delivery';
+    case OutForDelivery = 'out for delivery';
     case Returned = 'returned';
     case Cancelled = 'cancelled';
+    case WithHold = 'with hold';
+    case Delivered = 'delivered';
+    case OutOfStock = 'out of stock';
+    case Waiting = 'waiting';
 }

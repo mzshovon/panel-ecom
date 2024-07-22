@@ -28,47 +28,33 @@
         <div class="row">
             @include('frontend.layouts.user_sidebar')
             <div class="col-12 col-md-7 col-sm-12 col-lg-9">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Order</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">#1012</th>
-                            <td>June 11, 2019 </td>
-                            <td>Completed</td>
-                            <td>30$</td>
-                            <td><a href="#" class="btn btn-dark btn-small">View</a></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">#2214</th>
-                            <td>March 10, 2019</td>
-                            <td>Completed</td>
-                            <td>50$</td>
-                            <td><a href="#" class="btn btn-dark btn-small">View</a></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">#3434</th>
-                            <td>February 11, 2019</td>
-                            <td>Pending</td>
-                            <td>25$</td>
-                            <td><a href="#" class="btn btn-dark btn-small">View</a></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">#5312</th>
-                            <td>July 11, 2019</td>
-                            <td>Processsing</td>
-                            <td>56$</td>
-                            <td><a href="#" class="btn btn-dark btn-small">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                @if (count($orders) > 0)
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <th scope="row">#{{$order['id']}}</th>
+                                    <td>{{$order['created_at']}}</td>
+                                    <td>{{$order['status']}}</td>
+                                    <td>{{$order['total_amount_after_discount']}} TK.</td>
+                                    <td><a href="#" class="btn btn-dark btn-small">View</a></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <h2 class="text-center">No Order Available!</h2>
+                @endif
+
             </div>
         </div>
     </div>

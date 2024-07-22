@@ -8,5 +8,6 @@ interface CartServiceInterface {
     function addCartProducts(array $request):array;
     function updateCartProducts(array $request):array;
     function deleteCartProducts(array $request):array;
+    function placeOrder(array $request):bool;
 
 }

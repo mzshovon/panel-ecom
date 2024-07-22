@@ -35,18 +35,4 @@ class UserController extends Controller
             abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
         }
     }
-
-    public function placeOrder(OrderPlaceRequest $request)
-    {
-        try {
-            $order = $this->repo->placeOrder($request->all());
-            if($order) {
-                return redirect()->back()->with("success", "Order is placed successfully!");
-            } else {
-                return redirect()->back()->with("error", "Something went wrong while placing order!");
-            }
-        } catch (\Exception $ex) {
-            abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
-        }
-    }
 }

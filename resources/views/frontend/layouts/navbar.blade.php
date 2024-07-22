@@ -66,7 +66,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
                     <li><a href="{{route('dashboard')}}">Dahsboard</a></li>
-                    <li><a href="{{route('orders')}}">Orders</a></li>
+                    <li><a href="{{route('user.orders')}}">Orders</a></li>
                     <li><a href="address.html">Address</a></li>
                     <li><a href="profile-details.html">Profile Details</a></li>
                 </ul>

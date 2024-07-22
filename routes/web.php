@@ -45,17 +45,17 @@ Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remov
 Route::get('/cart', [CartController::class, 'index'])->name('cart.items');
 Route::get('/cart/page', [CartController::class, 'viewCart'])->name('cart.page');
 
+Route::group(['middleware' => ['auth', 'role:user']], function() {
+    Route::get('/dashboard', [FrontendUserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/orders', [FrontendUserController::class, 'orders'])->name('user.orders');
+    Route::post('/cart/checkout', [CartController::class, 'checkoutOrder'])->name('orders');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+});
+
 // Admin auth routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
 Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
-
-Route::group(['middleware' => ['auth', 'role:user']], function() {
-    Route::get('/dashboard', [FrontendUserController::class, 'dashboard'])->name('dashboard');
-    Route::get('/orders', [FrontendUserController::class, 'orders'])->name('orders');
-    Route::post('/orders', [FrontendUserController::class, 'placeOrder'])->name('orders');
-    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-});
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
