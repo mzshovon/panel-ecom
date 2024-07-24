@@ -54,7 +54,7 @@
                 @else
                     <h2 class="text-center">No Order Available!</h2>
                 @endif
-
+                {{$orders->links('pagination::bootstrap-5')}}
             </div>
         </div>
     </div>

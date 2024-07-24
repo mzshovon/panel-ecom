@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\CustomLoginController;
@@ -62,7 +63,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'r
     Route::resources([
         'users' => UserController::class,
         'products' => ProductController::class,
+        'orders' => OrderController::class,
     ]);
     Route::put('/users/status/{user}', [UserController::class, 'statusChange'])->name('users.status.change');
+    Route::post('/orders/status', [OrderController::class, 'statusChange'])->name('orders.status.change');
 });
 

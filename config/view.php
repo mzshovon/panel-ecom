@@ -33,4 +33,22 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    'status' => [
+        'active' => "success",
+        'deactive' => "danger",
+        'rejected' => "danger",
+        'declined' => "danger",
+        'pending' => "warning",
+        'freeze' => "warning",
+        'paused' => "warning",
+        'assigned for delivery' => "success",
+        'out for delivery' => "success",
+        'returned' => "danger",
+        'cancelled' => "danger",
+        'with hold' => "warning",
+        'delivered' => "success",
+        'out of stock' => "secondary",
+        'waiting' => "warning",
+    ]
+
 ];

@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         try {
             $data = [];
-            $data['orders'] = $this->repo->getUserOrderList();
+            $data['orders'] = customPaginate($this->repo->getUserOrderList(), 10);
             return view('frontend.user.orders', $data);
         } catch (\Exception $ex) {
             abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
