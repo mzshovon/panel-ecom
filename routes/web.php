@@ -67,5 +67,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'r
     ]);
     Route::put('/users/status/{user}', [UserController::class, 'statusChange'])->name('users.status.change');
     Route::post('/orders/status', [OrderController::class, 'statusChange'])->name('orders.status.change');
+    Route::post('/orders/update-order-product', [OrderController::class, 'updateOrderProduct'])->name('orders.update.product');
+    Route::delete('/orders/delete-order-product/{orderedProductId}', [OrderController::class, 'destroyOrderProducts'])->name('orders.delete.product');
 });
 

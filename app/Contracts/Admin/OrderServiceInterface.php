@@ -10,6 +10,8 @@ interface OrderServiceInterface {
     function getOrderById(int $id) : Model|null;
     function createOrder(array $request) : bool;
     function updateOrder(int $id, array $request) : bool;
+    function updateOrderProduct(array $request) : bool;
     function deleteOrder(int $id) : bool;
+    function deleteOrderProduct(int $orderProductId) : bool;
 
 }

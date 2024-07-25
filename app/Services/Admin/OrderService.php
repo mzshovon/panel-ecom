@@ -3,13 +3,15 @@
 namespace App\Services\Admin;
 
 use App\Contracts\Admin\OrderServiceInterface;
-use App\Repo\OrderRepo;
+use App\Models\OrderProduct;
+use App\Repo\orderRepo;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderService implements OrderServiceInterface
 {
     function __construct(
-        private readonly OrderRepo $OrderRepo
+        private readonly orderRepo $orderRepo,
+        private readonly OrderProduct $orderProductRepo
     ){}
 
     /**
@@ -17,7 +19,7 @@ class OrderService implements OrderServiceInterface
      */
     function getOrders() : array
     {
-        $data = $this->OrderRepo->get();
+        $data = $this->orderRepo->get();
         return $data ?? [];
     }
 
@@ -28,7 +30,7 @@ class OrderService implements OrderServiceInterface
      */
     function getOrderById(int $id) : Model|null
     {
-        $data = $this->OrderRepo->getByColumn("id",$id);
+        $data = $this->orderRepo->getByColumn("id",$id);
         return $data;
     }
 
@@ -40,7 +42,7 @@ class OrderService implements OrderServiceInterface
     function createOrder(array $request) : bool
     {
         $request['created_by'] = auth()->user()->id;
-        $data = $this->OrderRepo->create($request);
+        $data = $this->orderRepo->create($request);
         return $data ? true : false;
     }
 
@@ -53,8 +55,35 @@ class OrderService implements OrderServiceInterface
     function updateOrder(int $id, array $request) : bool
     {
         $request['updated_by'] = auth()->user()->id;
-        $data = $this->OrderRepo->update("id", $id, $this->fillableData($request));
+        $data = $this->orderRepo->update("id", $id, $this->fillableData($request));
         return $data ?? false;
+    }
+
+    /**
+     * @param int $id
+     * @param array $request
+     *
+     * @return bool
+     */
+    function updateOrderProduct(array $request) : bool
+    {
+        $updatedBy = auth()->user()->id;
+        $orderedProductId = $request['product_id'];
+        $orderedProduct = $this->orderProductRepo->find($orderedProductId);
+        $orderedProduct->quantity = $request['quantity'];
+        $orderedProduct->updated_by = $updatedBy;
+
+        if($orderedProduct->update()){
+            $order = $this->orderRepo->getByColumn("id", $request['order_id']);
+            // Data wrapper to be updated
+            $columnsToBeSaved = [];
+            $columnsToBeSaved['updated_by'] = $updatedBy;
+            $columnsToBeSaved['quantity'] = $request['total_quantity'];
+            $columnsToBeSaved['total_amount'] = $request['total_amount'];
+            $columnsToBeSaved['total_amount_after_discount'] = $request['total_amount'] + $order->shipping_charge;
+            $data = $this->orderRepo->update("id", $request['order_id'] , $this->fillableData($columnsToBeSaved));
+            return $data ?? false;
+        }
     }
 
     /**
@@ -64,7 +93,18 @@ class OrderService implements OrderServiceInterface
      */
     function deleteOrder(int $id) : bool
     {
-        $data = $this->OrderRepo->delete("id", $id);
+        $data = $this->orderRepo->delete("id", $id);
+        return $data ?? false;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    function deleteOrderProduct(int $orderProductId) : bool
+    {
+        $data = $this->orderRepo->delete("id", $orderProductId);
         return $data ?? false;
     }
 

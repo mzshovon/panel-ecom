@@ -111,6 +111,20 @@ class OrderController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function updateOrderProduct(Request $request)
+    {
+        try {
+            $update = $this->repo->updateOrderProduct($request->all());
+            return response()->json([ "message" =>
+            ($update ? 'Order product updated successfully.' : 'something went wrong')]);
+        } catch (Exception $ex) {
+            return response()->json(['error' =>  $ex->getMessage()]);
+        }
+    }
+
+    /**
      * Update the status specified resource in storage.
      */
     public function statusChange(Request $request)
@@ -135,6 +149,17 @@ class OrderController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)
+    {
+        try {
+            $delete = $this->repo->deleteOrder($id);
+            return response()->json([($delete ? 'success' : 'error') =>
+                    ($delete ? 'Order deleted successfully.' : 'something went wrong with delete')]);
+        } catch (Exception $ex) {
+            return redirect()->back()->with("error", $ex->getMessage());
+        }
+    }
+
+    public function destroyOrderProducts(int $id)
     {
         try {
             $delete = $this->repo->deleteOrder($id);
