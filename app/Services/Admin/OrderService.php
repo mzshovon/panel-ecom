@@ -39,9 +39,7 @@ class OrderService implements OrderServiceInterface
      */
     function createOrder(array $request) : bool
     {
-        if(isset($request['password'])) {
-            $request['password'] = bcrypt($request['password']);
-        }
+        $request['created_by'] = auth()->user()->id;
         $data = $this->OrderRepo->create($request);
         return $data ? true : false;
     }

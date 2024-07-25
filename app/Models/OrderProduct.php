@@ -17,4 +17,9 @@ class OrderProduct extends Model
         "created_by",
         "updated_by",
     ];
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
 }

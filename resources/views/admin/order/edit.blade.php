@@ -115,6 +115,10 @@
                 let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
                 $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);
             });
+            $('input[name="shipping_charge"]').on("blur change", function(){
+                let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
+                $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);
+            });
 
             function getTotalAmountAfterDiscount()
             {

@@ -44,7 +44,7 @@
                                 <tr>
                                     <th scope="row">#{{$order['id']}}</th>
                                     <td>{{$order['created_at']}}</td>
-                                    <td>{{$order['status']}}</td>
+                                    <td><p class="text-{{config('view.status.'.$order['status'])}}" style="font-weight:bold">{{ucfirst($order['status'])}}</p></td>
                                     <td>{{$order['total_amount_after_discount']}} TK.</td>
                                     <td><a href="#" class="btn btn-dark btn-small">View</a></td>
                                 </tr>

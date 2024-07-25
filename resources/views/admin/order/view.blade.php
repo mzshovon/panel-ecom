@@ -40,8 +40,9 @@
                         <td>{{$order['address']}}</td>
                         <td>{{$order['mobile'] ?? "N/A"}}</td>
                         <td>
-                            <button class="btn btn-{{config('view.status.'.$order['status'] ?? "warning")}} btn-sm"  onclick="updateStatusModalShow(`{{ $order['id'] }}`, `{{ $order['status'] }}`)">
-                                {{$order['status'] ?? "Pending"}}
+                            <button class="btn btn-{{config('view.status.'.$order['status'] ?? "warning")}} btn-sm"
+                            onclick="updateStatusModalShow(`{{ $order['id'] }}`, `{{ $order['status'] }}`)">
+                                {{ucfirst($order['status']) ?? "Pending"}}
                             </button>
                         </td>
                         <td>{{$order['created_at']}}</td>
@@ -49,7 +50,7 @@
                             <a class="btn btn-primary btn-sm" href="{{route("admin.orders.edit", ["order"=> $order["id"]])}}">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a class="btn btn-success btn-sm">
+                            <a class="btn btn-success btn-sm"  href="{{route("admin.orders.show", ["order"=> $order["id"]])}}">
                                 <i class="bi bi-box-seam"></i>
                             </a>
                             <a class="btn btn-danger btn-sm"

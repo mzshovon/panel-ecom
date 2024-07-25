@@ -15,6 +15,7 @@ class OrderController extends Controller
     const INDEX_PAGE = "Orders";
     const CREATE_PAGE = "Create Orders";
     const UPDATE_PAGE = "Update Orders";
+    const SHOW_PAGE = "Products list of order #";
 
     public function __construct(private OrderServiceInterface $repo){}
     /**
@@ -68,8 +69,9 @@ class OrderController extends Controller
     {
         try {
             $data = [];
-            $data['page'] = self::UPDATE_PAGE;
-            return view('admin.order.create', $data);
+            $data['page'] = self::SHOW_PAGE . "{$id}";
+            $data['order'] = $this->repo->getOrderById($id);
+            return view('admin.order.product', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
         }
