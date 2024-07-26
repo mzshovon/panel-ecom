@@ -11,4 +11,5 @@ interface UserServiceInterface {
     function getOrderInformation(int $id):Model;
     function updateUserInformation():array;
     function updateUserBillingDetails():array;
+    function review(array $request):bool;
 }

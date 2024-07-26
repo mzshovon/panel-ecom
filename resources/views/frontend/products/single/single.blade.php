@@ -1,4 +1,9 @@
 @extends('frontend.layouts.app')
+
+@section("stylesheet")
+    <link rel="stylesheet" href="{{URL::to('/')}}/public/frontend/css/custom-style.css">
+@endsection
+
 @section('content')
 
 <section class="page-header">
@@ -118,96 +123,44 @@
 			</div>
 		</div>
 		<div class="row">
-			 <div class="col-lg-3 col-6" >
-		      	<div class="product">
-					<div class="product-wrap">
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-first" src="images/shop/products/322.jpg" alt="product-img" /></a>
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-second" src="images/shop/products/444.jpg" alt="product-img" /></a>
-					</div>
+            @foreach ($product->categories[0]->products->where("id","!=", $product->id)->take(4) as $productGallery)
+                <div class="col-lg-3 col-6" >
+                    <div class="product">
+                    <div class="product-wrap">
+                        <a href="{{route('single-product', ['productId'=>$productGallery['id']])}}"><img class="img-fluid w-100 mb-3 img-first" src="{{URL::to("/") . "/" .$productGallery['images'][0]['image_path']}}" alt="product-img" /></a>
+                        <a href="{{route('single-product', ['productId'=>$productGallery['id']])}}"><img class="img-fluid w-100 mb-3 img-second" src="{{URL::to("/") . "/" .$productGallery['images'][1]['image_path']}}" alt="product-img" /></a>
+                    </div>
 
-					<span class="onsale">Sale</span>
-					<div class="product-hover-overlay">
-						<a href="#"><i class="tf-ion-android-cart"></i></a>
-						<a href="#"><i class="tf-ion-ios-heart"></i></a>
-			      	</div>
+                    <span class="onsale">Sale</span>
+                    <div class="product-hover-overlay">
+                        {{-- <a href="#"><i class="tf-ion-android-cart"></i></a> --}}
+                        <a href="#"><i class="tf-ion-ios-heart"></i></a>
+                        </div>
 
-					<div class="product-info">
-						<h2 class="product-title h5 mb-0"><a href="product-single.html">Kirby Shirt</a></h2>
-						<span class="price">
-							$329.10
-						</span>
-					</div>
-				</div>
-		     </div>
-
-			<div class="col-lg-3 col-6" >
-		      	<div class="product">
-					<div class="product-wrap">
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-first" src="images/shop/products/111.jpg" alt="product-img" /></a>
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-second" src="images/shop/products/222.jpg" alt="product-img" /></a>
-					</div>
-
-					<span class="onsale">Sale</span>
-					<div class="product-hover-overlay">
-						<a href="#"><i class="tf-ion-android-cart"></i></a>
-						<a href="#"><i class="tf-ion-ios-heart"></i></a>
-			      	</div>
-
-					<div class="product-info">
-						<h2 class="product-title h5 mb-0"><a href="product-single.html">Kirby Shirt</a></h2>
-						<span class="price">
-							$329.10
-						</span>
-					</div>
-				</div>
-		     </div>
-
-
-			<div class="col-lg-3 col-6" >
-		      	<div class="product">
-					<div class="product-wrap">
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-first" src="images/shop/products/111.jpg" alt="product-img" /></a>
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-second" src="images/shop/products/322.jpg" alt="product-img" /></a>
-					</div>
-
-					<span class="onsale">Sale</span>
-					<div class="product-hover-overlay">
-						<a href="#"><i class="tf-ion-android-cart"></i></a>
-						<a href="#"><i class="tf-ion-ios-heart"></i></a>
-			      	</div>
-
-					<div class="product-info">
-						<h2 class="product-title h5 mb-0"><a href="product-single.html">Kirby Shirt</a></h2>
-						<span class="price">
-							$329.10
-						</span>
-					</div>
-				</div>
-		     </div>
-
-			<div class="col-lg-3 col-6">
-		      	<div class="product">
-					<div class="product-wrap">
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-first" src="images/shop/products/444.jpg" alt="product-img" /></a>
-						<a href="product-single.html"><img class="img-fluid w-100 mb-3 img-second" src="images/shop/products/222.jpg" alt="product-img" /></a>
-					</div>
-
-					<span class="onsale">Sale</span>
-					<div class="product-hover-overlay">
-						<a href="#"><i class="tf-ion-android-cart"></i></a>
-						<a href="#"><i class="tf-ion-ios-heart"></i></a>
-			      	</div>
-
-					<div class="product-info">
-						<h2 class="product-title h5 mb-0"><a href="product-single.html">Kirby Shirt</a></h2>
-						<span class="price">
-							$329.10
-						</span>
-					</div>
-				</div>
-		     </div>
+                    <div class="product-info">
+                        <h2 class="product-title h5 mb-0"><a href="{{route('single-product', ['productId'=>$productGallery['id']])}}">{{$productGallery['name']}}</a></h2>
+                        <span class="price">
+                            {{$productGallery['price']}} TK.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            @endforeach
 		</div>
 	</div>
 </section>
 
+@endsection
+
+@section('script')
+    @if (session('error'))
+        <script>
+            showErrorAlert('{{session('error')}}');
+        </script>
+    @endif
+    @if (session('success'))
+        <script>
+            showSuccessAlert('{{session('success')}}');
+        </script>
+    @endif
 @endsection

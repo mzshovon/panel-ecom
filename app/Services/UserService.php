@@ -3,6 +3,7 @@
 namespace App\Services;
 use App\Contracts\UserServiceInterface;
 use App\Models\OrderProduct;
+use App\Models\Review;
 use App\Repo\OrderRepo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -65,5 +66,13 @@ class UserService implements UserServiceInterface
     function updateUserBillingDetails():array
     {
         return [];
+    }
+
+    function review(array $request): bool
+    {
+        $request['user_id'] = auth()->user()->id;
+        $request['rating'] = $request['rate'];
+        $store = Review::create($request);
+        return $store ? true : false;
     }
 }

@@ -46,4 +46,18 @@ class UserController extends Controller
             abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
         }
     }
+
+    public function review(Request $request)
+    {
+        try {
+            $store =$this->repo->review($request->all());
+            if($store) {
+                return redirect()->back()->with("success", "Your review has been submitted successfully!");
+            } else {
+                return redirect()->back()->with("error", "Something went wrong!");
+            }
+        } catch (\Exception $ex) {
+            return redirect()->back()->with("error", $ex->getMessage());
+        }
+    }
 }

@@ -4,7 +4,7 @@
           <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Additional Information</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Reviews(2)</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Reviews({{$product->reviews->count()}})</a>
           </div>
         </nav>
 
@@ -44,58 +44,65 @@
           <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
             <div class="row">
                 <div class="col-lg-7">
-                    <div class="media review-block mb-4">
-                        <img src="images/shop/avater-1.jpg" alt="reviewimg" class="img-fluid mr-4">
-                        <div class="media-body">
-                            <div class="product-review">
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
+                    @forelse ($product->reviews->take(5) as $review)
+                        <div class="media review-block mb-4">
+                            <img src="{{URL::to('/')}}/public/frontend/images/avatar.png" alt="reviewimg" class="img-fluid mr-4">
+                            <div class="media-body">
+                                <div class="product-review">
+                                    @for ($i = 1; $i <= $review['rating']; $i++)
+                                        <span><i class="tf-ion-android-star"></i></span>
+                                    @endfor
+                                </div>
+                                <h6>{{$review['name']}} <span class="text-sm text-muted font-weight-normal ml-3">-{{\Carbon\Carbon::parse($review['created_at'])->format("M d, Y")}}</span></h6>
+                                <p>{{$review['review']}}</p>
                             </div>
-                            <h6>NasaTheme <span class="text-sm text-muted font-weight-normal ml-3">-June 23, 2019</span></h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum suscipit consequuntur in, perspiciatis laudantium ipsa fugit. Iure esse saepe error dolore quod.</p>
                         </div>
-                    </div>
+                    @empty
+                        <h3 class="text-center">No review is given yet for this product!</h3>
+                    @endforelse
 
-                    <div class="media review-block">
-                        <img src="images/shop/avater-2.jpg" alt="reviewimg" class="img-fluid mr-4">
-                        <div class="media-body">
-                            <div class="product-review">
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star"></i></span>
-                                <span><i class="tf-ion-android-star-outline"></i></span>
-                            </div>
-                            <h6>NasaTheme <span class="text-sm text-muted font-weight-normal ml-3">-June 23, 2019</span></h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum suscipit consequuntur in, perspiciatis laudantium ipsa fugit. Iure esse saepe error dolore quod.</p>
-                        </div>
-                    </div>
                 </div>
 
+                @auth
+                    <div class="col-lg-5">
+                        <div class="review-comment mt-5 mt-lg-0">
+                            <h4 class="mb-3">Add a Review</h4>
+                            <form action="{{route("user.review")}}" method="POST">
+                                @csrf
+                                <div class="rate">
+                                    <input type="radio" id="star5" name="rate" value="5"/>
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" id="star4" name="rate" value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" name="rate" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" name="rate" value="2" />
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" name="rate" value="1" checked/>
+                                    <label for="star1" title="text">1 star</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" value="{{auth()->user()?->name ?: ""}}" placeholder="Your Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" name="product_id" value="{{$product->id}}" placeholder="Your Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" name="rating" value="0" placeholder="Your Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="email" value="{{auth()->user()?->email ?: ""}}" placeholder="Your Email">
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="review" id="review" class="form-control" cols="30" rows="4" placeholder="Your Review"></textarea>
+                                </div>
 
-                <div class="col-lg-5">
-                    <div class="review-comment mt-5 mt-lg-0">
-                        <h4 class="mb-3">Add a Review</h4>
-
-                        <form action="#">
-                            <div class="starrr"></div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Name">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Your Email">
-                            </div>
-                            <div class="form-group">
-                                <textarea name="comment" id="comment" class="form-control" cols="30" rows="4" placeholder="Your Review"></textarea>
-                            </div>
-
-                            <a href="#" class="btn btn-main btn-small">Submit Review</a>
-                        </form>
+                                <button type="submit" class="btn btn-main btn-small">Submit Review</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @endauth
+
             </div>
           </div>
         </div>

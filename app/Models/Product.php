@@ -71,6 +71,16 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class)->orderBy("reviews.updated_at", "desc");
+    }
+
+    public function avgReviewRating()
+    {
+        return $this->reviews()->avg('rating');
+    }
+
     /**
      * @return Attribute
      */
