@@ -104,6 +104,21 @@ class OrderService implements OrderServiceInterface
      */
     function deleteOrderProduct(int $orderProductId) : bool
     {
+        $columnsToBeUpdated = [];
+        $updatedBy = auth()->user()->id;
+        $orderedProduct = $this->orderProductRepo->find($orderProductId);
+        $orderId = $orderedProduct->order_id;
+        $deletedQuantity = $orderedProduct->quantity;
+        $deletedAmount = $deletedQuantity * $orderedProduct->price;
+        if($orderedProduct->delete()){
+            $order = $this->orderRepo->getByColumn("id", $orderId);
+            $columnsToBeUpdated['updated_by'] = $updatedBy;
+            $columnsToBeUpdated['quantity'] = $order->quantity - $deletedQuantity;
+            $columnsToBeUpdated['total_amount'] = $order->total_amount - $deletedAmount;
+            $columnsToBeUpdated['total_amount_after_discount'] = $order->total_amount - $deletedAmount + $order->shipping_charge;
+            $data = $this->orderRepo->update("id", $orderId , $this->fillableData($columnsToBeUpdated));
+            return $data ?? false;
+        }
         $data = $this->orderRepo->delete("id", $orderProductId);
         return $data ?? false;
     }

@@ -27,6 +27,7 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="{{URL::to('/')}}/public/frontend/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  @yield('stylesheet')
 </head>
 <body id="body">
     @include('frontend.layouts.navbar')

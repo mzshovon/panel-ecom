@@ -46,7 +46,7 @@
                                     <td>{{$order['created_at']}}</td>
                                     <td><p class="text-{{config('view.status.'.$order['status'])}}" style="font-weight:bold">{{ucfirst($order['status'])}}</p></td>
                                     <td>{{$order['total_amount_after_discount']}} TK.</td>
-                                    <td><a href="#" class="btn btn-dark btn-small">View</a></td>
+                                    <td><a href="{{route('user.order.details', ['id'=>$order['id']])}}" class="btn btn-dark btn-small">View</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

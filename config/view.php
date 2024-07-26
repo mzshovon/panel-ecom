@@ -49,6 +49,42 @@ return [
         'delivered' => "success",
         'out of stock' => "secondary",
         'waiting' => "warning",
-    ]
+        'confirmed' => "success",
+    ],
+    'track' => [
+        'step_one' => [
+            "success" => "active",
+            'confirmed' => "active",
+            'deactive' => "cancel",
+            'paused' => "cancel",
+            'freeze' => "cancel",
+            'rejected' => "cancel",
+            'declined' => "cancel",
+            'out of stock' => "cancel",
+            'out for delivery' => "active",
+            'cancelled' => "active",
+            'with hold' => "active",
+            'assigned for delivery' => "active",
+            'returned' => "active",
+            'delivered' => "active",
+        ],
+        'step_two' => [
+            'out for delivery' => "active",
+            'cancelled' => "cancel",
+            'with hold' => "cancel",
+            'assigned for delivery' => "active",
+            'returned' => "active",
+            'delivered' => "active",
+        ],
+        'step_three' => [
+            'assigned for delivery' => "active",
+            'returned' => "active",
+            'delivered' => "active",
+        ],
+        'step_four' => [
+            'returned' => "cancel",
+            'delivered' => "active",
+        ],
+    ],
 
 ];

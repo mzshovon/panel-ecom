@@ -49,6 +49,7 @@ Route::get('/cart/page', [CartController::class, 'viewCart'])->name('cart.page')
 Route::group(['middleware' => ['auth', 'role:user']], function() {
     Route::get('/dashboard', [FrontendUserController::class, 'dashboard'])->name('dashboard');
     Route::get('/orders', [FrontendUserController::class, 'orders'])->name('user.orders');
+    Route::get('/orders/details/{id}', [FrontendUserController::class, 'orderDetails'])->name('user.order.details');
     Route::post('/cart/checkout', [CartController::class, 'checkoutOrder'])->name('orders');
     Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });

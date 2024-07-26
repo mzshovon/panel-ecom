@@ -24,7 +24,8 @@ final readonly class OrderRepo
     function get($columns = ["*"]) : array
     {
         try {
-            $data = $this->model::orderBy("updated_at", "desc")
+            $data = $this->model::with("products")
+                ->orderBy("updated_at", "desc")
                 ->get($columns)
                 ->toArray();
             return !empty($data) ? $data : [];
@@ -42,7 +43,7 @@ final readonly class OrderRepo
     function getByColumn(string $column = "id", string $value) : Model|null
     {
         try {
-            $data = $this->model::where($column, $value)->first();
+            $data = $this->model::with("products")->where($column, $value)->first();
             return $data ?? null;
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());

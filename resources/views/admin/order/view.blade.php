@@ -40,7 +40,7 @@
                         <td>{{$order['address']}}</td>
                         <td>{{$order['mobile'] ?? "N/A"}}</td>
                         <td>
-                            <button class="btn btn-{{config('view.status.'.$order['status'] ?? "warning")}} btn-sm"
+                            <button class="btn btn-{{config('view.status.'.$order['status']) ?? "warning"}} btn-sm"
                             onclick="updateStatusModalShow(`{{ $order['id'] }}`, `{{ $order['status'] }}`)">
                                 {{ucfirst($order['status']) ?? "Pending"}}
                             </button>
@@ -84,7 +84,7 @@
                         class="form-control" required>
                         <option value="">Select a Status</option>
                         @foreach ($orderStatus as $status)
-                            <option id="status_option_id{{ $status }}" value="{{ $status }}">
+                            <option class="{{ $status }}" value="{{ $status }}">
                                 {{ ucfirst($status) }}</option>
                         @endforeach
                     </select>
@@ -109,9 +109,11 @@
         if(orderId == "" || orderId == null){
             return false
         }
+
         $("#id_order_id").val(orderId);
         if (status) {
-            $("#status_option_id" + status).prop('selected', true);
+            let statusOptionClassName = status.split(" ").toString().split(',').join('.');
+            $(`.${statusOptionClassName}`).prop('selected', true);
         } else {
             $('#status_id').find($('option')).prop('selected', false);
         }

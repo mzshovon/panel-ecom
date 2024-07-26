@@ -162,9 +162,9 @@ class OrderController extends Controller
     public function destroyOrderProducts(int $id)
     {
         try {
-            $delete = $this->repo->deleteOrder($id);
+            $delete = $this->repo->deleteOrderProduct($id);
             return response()->json([($delete ? 'success' : 'error') =>
-                    ($delete ? 'Order deleted successfully.' : 'something went wrong with delete')]);
+                    ($delete ? 'Ordered Product deleted successfully.' : 'something went wrong with delete')]);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
         }

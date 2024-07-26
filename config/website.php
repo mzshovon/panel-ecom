@@ -16,5 +16,21 @@ return [
             "Rangpur",
             "Barishal",
         ]
+    ],
+    "order_from" => [
+        "website",
+        "facebook",
+        "messanger",
+        "instagram",
+        "linkedin",
+        "call",
+    ],
+    "courier" => [
+        "pathao",
+        "steadfast",
+        "redex",
+        "sundarban",
+        "sa paribahan",
+        "by office",
     ]
 ];

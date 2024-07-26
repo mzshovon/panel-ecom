@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     @forelse ($order->products as $product)
-                    <tr data-id="p-{{$product['id']}}">
+                    <tr data-id="{{$product['id']}}">
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$product->product->name}}</td>
                         <td>
@@ -38,7 +38,7 @@
                         <td class="total-price">{{$product['quantity'] * $product['price']}} TK.</td>
                         <td>
                             <a class="btn btn-danger btn-sm"
-                                onclick="deleteRow('{{route('admin.orders.destroy', ['order' => $product['id']])}}', '{{csrf_token()}}', '{{$product['id']}}')">
+                                onclick="deleteRow('{{route('admin.orders.delete.product', ['orderedProductId' => $product['id']])}}', '{{csrf_token()}}', '{{$product['id']}}')">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
@@ -72,7 +72,9 @@
 @endsection
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{URL::to('/')}}/public/assets/js/custom.js"></script>
 <script>
+
     $("input[name='quantity']").on("change", function(){
         let subTotalAmount = 0;
         let quantity = $(this).val();
@@ -107,7 +109,7 @@
         });
 
         let subTotalAmount = parseInt($('.sub-total').text());
-        console.log(order_id,product_id,quantity,subTotalAmount,totalQty);
+
         $.ajax({
             type: "POST",
             url: '{{route('admin.orders.update.product')}}',

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Contracts\UserServiceInterface;
 use App\Models\OrderProduct;
 use App\Repo\OrderRepo;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -38,6 +39,16 @@ class UserService implements UserServiceInterface
     function getUserInformation():array
     {
         return [];
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Model
+     */
+    function getOrderInformation(int $id):Model
+    {
+        return $this->orderRepo->getByColumn("id", $id);
     }
 
     /**

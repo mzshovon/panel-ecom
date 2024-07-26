@@ -20,4 +20,7 @@ enum StatusEnum: string {
     case Delivered = 'delivered';
     case OutOfStock = 'out of stock';
     case Waiting = 'waiting';
+    case InTransit = 'in transit';
+    case AtSort = 'at sort';
+    case Confirmed = 'confirmed';
 }

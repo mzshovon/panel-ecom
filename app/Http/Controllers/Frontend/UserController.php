@@ -35,4 +35,15 @@ class UserController extends Controller
             abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
         }
     }
+
+    public function orderDetails(int $id)
+    {
+        try {
+            $data = [];
+            $data['order'] =$this->repo->getOrderInformation($id);
+            return view('frontend.user.order-view', $data);
+        } catch (\Exception $ex) {
+            abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
+        }
+    }
 }
