@@ -63,6 +63,8 @@ Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.lo
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/optimize', [DashboardController::class, 'optimize'])->name('optimize');
+    Route::get('/cache-clear', [DashboardController::class, 'cacheClear'])->name('cache-clear');
     Route::resources([
         'users' => UserController::class,
         'products' => ProductController::class,

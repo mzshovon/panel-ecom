@@ -3,6 +3,7 @@
 
 <section class="section dashboard">
     <div class="row">
+        @include('admin.layouts.partials.alerts')
 
       <!-- Left side columns -->
       <div class="col-lg-8">

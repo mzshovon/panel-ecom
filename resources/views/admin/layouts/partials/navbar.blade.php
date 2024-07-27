@@ -23,7 +23,14 @@
                     <i class="bi bi-search"></i>
                 </a>
             </li><!-- End Search Icon-->
-
+            <a class="btn btn-primary btn-sm" href="{{route('admin.optimize')}}">
+                Optimize
+            </a><!-- End Messages Icon -->
+            &nbsp;
+            <a class="btn btn-primary btn-sm" href="{{route('admin.cache-clear')}}">
+                Cache clear
+            </a><!-- End Messages Icon -->
+            &nbsp;
             <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -98,7 +105,6 @@
                 </ul><!-- End Notification Dropdown Items -->
 
             </li><!-- End Notification Nav -->
-
             <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
