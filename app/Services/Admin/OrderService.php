@@ -4,7 +4,7 @@ namespace App\Services\Admin;
 
 use App\Contracts\Admin\OrderServiceInterface;
 use App\Models\OrderProduct;
-use App\Repo\orderRepo;
+use App\Repo\OrderRepo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 

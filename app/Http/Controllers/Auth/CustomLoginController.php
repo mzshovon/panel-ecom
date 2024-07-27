@@ -19,12 +19,6 @@ class CustomLoginController extends Controller
     }
 
     // Show User Login Form
-    public function showSignupForm()
-    {
-        return view('frontend.auth.signup');
-    }
-
-    // Show User Login Form
     public function showLoginForm()
     {
         return view('frontend.auth.login');

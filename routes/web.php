@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\CustomLoginController;
+use App\Http\Controllers\Auth\CustomRegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
@@ -25,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // User auth routes
-Route::get('/signup', [CustomLoginController::class, 'showSignupForm'])->name('signup');
-Route::post('/signup', [CustomLoginController::class, 'showSignupForm'])->name('signup');
+Route::get('/signup', [CustomRegisterController::class, 'showRegistrationForm'])->name('signup');
+Route::post('/signup', [CustomRegisterController::class, 'register'])->name('signup');
 Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
 Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
