@@ -29,6 +29,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Status</label>
+                            <input type="hidden" name="prev_status" class="form-control" value="{{$order->status}}">
                             <select id="inputState" name="status" class="form-select">
                                 @foreach ($orderStatus as $status)
                                     <option value="{{$status}}" {{ $order->status == $status ? "selected" : ""}}>{{ucfirst($status)}}</option>

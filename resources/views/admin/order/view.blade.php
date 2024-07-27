@@ -80,6 +80,7 @@
                     method="POST" class="mx-3">
                     @csrf
                     <input type="hidden" name="order_id" id="id_order_id">
+                    <input type="hidden" name="prev_status" id="id_prev_status">
                     <select name="status" id="status_id"
                         class="form-control" required>
                         <option value="">Select a Status</option>
@@ -109,8 +110,8 @@
         if(orderId == "" || orderId == null){
             return false
         }
-
         $("#id_order_id").val(orderId);
+        $("#id_prev_status").val(status);
         if (status) {
             let statusOptionClassName = status.split(" ").toString().split(',').join('.');
             $(`.${statusOptionClassName}`).prop('selected', true);
