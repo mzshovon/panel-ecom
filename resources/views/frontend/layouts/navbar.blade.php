@@ -5,8 +5,26 @@
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
         aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span>
+            <a href="#" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-target="#cart-drop"  aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="tf-ion-android-cart"></i>
+                    <span id="cart-count" class="cart-count-section">{{cartCount()}}</span>
+              </a>
+        </span>
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <div class="dropdown-menu cart-dropdown" id="cart-drop">
+        <div class="cart-summary">
+          <span class="h6">Total</span>
+          <span class="total-price h6">0</span>
+
+          <div class="text-center cart-buttons mt-3">
+            <a href="{{route('cart.page')}}" class="btn btn-small btn-transparent btn-block">View Cart</a>
+            <a href="{{route('cart.checkout')}}" class="btn btn-small btn-main btn-block">Checkout</a>
+          </div>
+        </div>
+      </div>
 
       <div class="collapse navbar-collapse " id="main-navbar">
         <ul class="navbar-nav mx-auto">
@@ -85,11 +103,9 @@
         <li class="dropdown cart-nav dropdown-slide list-inline-item">
           <a href="#" class="dropdown-toggle cart-icon" data-toggle="dropdown" data-hover="dropdown">
             <i class="tf-ion-android-cart"></i>
-                <span id="cart-count">{{cartCount()}}</span>
+                <span id="cart-count" class="cart-count-section">{{cartCount()}}</span>
           </a>
           <div class="dropdown-menu cart-dropdown">
-
-
             <div class="cart-summary">
               <span class="h6">Total</span>
               <span class="total-price h6">0</span>
@@ -101,6 +117,7 @@
             </div>
           </div>
         </li>
+
         @auth
             {{-- <li class="list-inline-item"><a href="#"><i class="tf-ion-ios-person mr-3"></i></a></li> --}}
             <li class="list-inline-item"><a href="{{route('logout')}}" onclick="event.preventDefault();
