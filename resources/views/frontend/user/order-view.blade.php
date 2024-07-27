@@ -45,7 +45,7 @@
                     <span class="icon">
                         <i class="tf-ion-happy-outline"></i>
                     </span>
-                    <span class="text">Delivered</span>
+                    <span class="text">{{ucfirst($order->status)}}</span>
                 </div>
             </div>
             <hr>

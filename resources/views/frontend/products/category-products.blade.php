@@ -96,7 +96,7 @@
             </div>
             <div class="col-md-3">
              @include('frontend.products.single.layouts.sidebar-categories')
-             @include('frontend.products.single.layouts.category-filter')
+             {{-- @include('frontend.products.single.layouts.category-filter') --}}
              {{-- @include('frontend.products.single.layouts.category-popular') --}}
             </div>
         </div>

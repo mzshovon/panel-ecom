@@ -24,7 +24,8 @@ final readonly class CategoryRepo
     function get() : array
     {
         try {
-            $data = $this->model::orderBy("updated_at", "desc")
+            $data = $this->model::with("products")
+                ->orderBy("updated_at", "desc")
                 ->get(['id','name', 'status'])
                 ->toArray();
             return !empty($data) ? $data : [];
