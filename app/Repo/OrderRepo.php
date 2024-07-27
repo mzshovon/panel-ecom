@@ -74,7 +74,13 @@ final readonly class OrderRepo
     function update(string $column = "id", $value, array $request) : bool
     {
         try {
-            return $this->model::where($column, $value)->update($request);
+            $order = $this->model::where($column, $value)->firstOrFail();
+            // Update the order attributes
+            $order->fill($request);
+            // Save the order to trigger the updating event
+            $order->update();
+            return $order ? true : false;
+
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }
@@ -89,7 +95,8 @@ final readonly class OrderRepo
     function delete(string $column = "id", $value) : bool
     {
         try {
-            return $this->model::where($column, $value)->delete();
+            $order = $this->model::where($column, $value)->firstOrFail();
+            return $order->delete() ? true : false;
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }
