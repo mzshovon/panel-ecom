@@ -126,7 +126,7 @@ class OrderService implements OrderServiceInterface
     {
         $columnsToBeUpdated = [];
         $updatedBy = auth()->user()->id;
-        $orderedProduct = $this->orderProductRepo->find($orderProductId);
+        $orderedProduct = $this->orderProductRepo->where("id", $orderProductId)->firstOrFail();
         $orderId = $orderedProduct->order_id;
         $deletedQuantity = $orderedProduct->quantity;
         $deletedAmount = $deletedQuantity * $orderedProduct->price;
@@ -139,8 +139,6 @@ class OrderService implements OrderServiceInterface
             $data = $this->orderRepo->update("id", $orderId, $this->fillableData($columnsToBeUpdated));
             return $data ?? false;
         }
-        $data = $this->orderRepo->delete("id", $orderProductId);
-        return $data ?? false;
     }
 
     /**
