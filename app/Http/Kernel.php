@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\TrackTrafficMiddelware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'role' => \Laratrust\Middleware\Role::class,
         'permission' => \Laratrust\Middleware\Permission::class,
         'ability' => \Laratrust\Middleware\Ability::class,
+        'traffic' => TrackTrafficMiddelware::class,
     ];
 }

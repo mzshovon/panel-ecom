@@ -5,6 +5,7 @@ use App\Repo\CategoryRepo;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -140,6 +141,7 @@ if (!function_exists('numberToOrdinal')) {
     }
 
 }
+
 if (!function_exists('cartCount')) {
     /**
      * Use if your filtering logic is:
