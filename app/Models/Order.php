@@ -98,4 +98,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class, 'order_id', 'id');
     }
+
+    public function orderedBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }

@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Admin\DashboardService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class DashboardController extends Controller
 {
-    function index()
+    function index(DashboardService $dashboardService)
     {
-        return view('admin.landing.dashboard');
+        $data = $dashboardService->getDashboardData();
+        return view('admin.landing.dashboard', $data);
     }
 
     function optimize()

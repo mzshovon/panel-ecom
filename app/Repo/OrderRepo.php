@@ -21,11 +21,14 @@ final readonly class OrderRepo
     /**
      * @return array
      */
-    function get($columns = ["*"]) : array
+    function get($columns = ["*"], $take = null) : array
     {
         try {
-            $data = $this->model::with("products")
+            $data = $this->model::with("products", "orderedBy")
                 ->orderBy("updated_at", "desc")
+                ->when($take, function($q) use ($take){
+                    $q->take($take);
+                })
                 ->get($columns)
                 ->toArray();
             return !empty($data) ? $data : [];
