@@ -21,6 +21,7 @@ class DashboardService {
         $data['traffic'] = $traffic;
         $data['total_traffic'] = $total_traffic;
         $data['orders'] = $this->getRecentSales();
+        $data['sales'] = $this->getSalesDataSet();
         return $data;
     }
 
@@ -41,6 +42,7 @@ class DashboardService {
     private function getTrafficDataSet(array $data) : array
     {
         [$traffic, $total_traffic] = [null, 0];
+        $this->getSalesDataSet();
         if(!empty($data)) {
             $total_traffic = $data["user_count"];
             foreach($data['uri'] as $uri => $val) {
@@ -55,6 +57,12 @@ class DashboardService {
             $traffic = json_encode($traffic);
         }
         return [$traffic, $total_traffic];
+    }
+
+    private function getSalesDataSet() : array
+    {
+        $sales = $this->orderRepo->getOrderRatio();
+        return (array)$sales;
     }
 
 }
