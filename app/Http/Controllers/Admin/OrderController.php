@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Contracts\Admin\OrderServiceInterface;
+use App\Contracts\Admin\ProductServiceInterface;
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderStoreRequest;
@@ -17,7 +18,10 @@ class OrderController extends Controller
     const UPDATE_PAGE = "Update Orders";
     const SHOW_PAGE = "Products list of order #";
 
-    public function __construct(private OrderServiceInterface $repo){}
+    public function __construct(
+        private OrderServiceInterface $repo,
+        private ProductServiceInterface $productRepo,
+        ){}
     /**
      * Display a listing of the resource.
      */
@@ -43,6 +47,7 @@ class OrderController extends Controller
             $data = [];
             $data['page'] = self::CREATE_PAGE;
             $data['orderStatus'] = array_column(StatusEnum::cases(), 'value');
+            $data['products'] = $this->productRepo->getProducts();
             return view('admin.order.create', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());

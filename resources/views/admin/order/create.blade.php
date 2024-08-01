@@ -60,14 +60,6 @@
                                 <option value="Payment Gateway">Payment Gateway</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label for="inputCity" class="form-label">City</label>
-                            <input type="text" name="city" class="form-control" id="inputCity">
-                        </div>
-                        <div class="col-md-2">
-                            <label for="inputZip" class="form-label">Zip</label>
-                            <input type="text" name="zip" class="form-control" id="inputZip">
-                        </div>
                         <div class="col-6">
                             <label for="floatingTextarea">Address</label>
                             <textarea class="form-control" name="address" placeholder="Address" id="floatingTextarea"
@@ -77,6 +69,37 @@
                             <label for="floatingTextarea">Notes</label>
                             <textarea class="form-control" name="notes" placeholder="Notes" id="floatingTextarea"
                                 style="height: 100px;"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <div id="product-container">
+                                <div class="product-group">
+                                    <div class="row">
+
+                                    <div class="col-md-6">
+                                    <select name="products[]" class="product-dropdown form-select">
+                                        <option value="">Select Product</option>
+                                        @foreach ($products as $product)
+                                        <option value="{{$product['id']}}"
+                                        data-price="{{ $product['price'] }}"
+                                        data-cost="{{ $product['purchase_cost'] }}"
+                                        data-stock="{{ $product['stock'] }}"
+                                        data-threshold="2">
+                                        {{ucfirst($product['name'])}} - {{$product['stock']}} Piece Available
+                                    </option>
+                                    @endforeach
+                                    </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                    <input type="number" name="quantities[]" class="quantity-input form-control" placeholder="Quantity" min="1">
+                                    <span class="stock-warning" style="display: none; color: red;">Stock is about to end!</span>
+                                    <span class="stock-error" style="display: none; color: red;">Product out of stock!</span>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button class="btn btn-outline-primary btn-md" type="button" id="addProductBtn">Add</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Create</button>
@@ -94,6 +117,41 @@
 
     <script>
         $(document).ready(function() {
+            const productContainer = $('#product-container');
+
+            $('#addProductBtn').click(function() {
+                let newProductGroup = $('.product-group:first').clone();
+                newProductGroup.find('input.quantity-input').val('');
+                newProductGroup.find('.stock-warning').hide();
+                newProductGroup.find('.stock-error').hide();
+                productContainer.append(newProductGroup);
+            });
+
+            productContainer.on('change', '.product-dropdown, .quantity-input', function() {
+                let $group = $(this).closest('.product-group');
+                let selectedProduct = $group.find('.product-dropdown option:selected');
+                let stock = parseInt(selectedProduct.data('stock'));
+                let threshold = parseInt(selectedProduct.data('threshold'));
+                let quantity = parseInt($group.find('.quantity-input').val());
+
+                // Reset warnings and errors
+                $group.find('.stock-warning').hide();
+                $group.find('.stock-error').hide();
+
+                // Check if stock is 0
+                if (stock === 0) {
+                    $group.find('.stock-error').show();
+                    $group.find('.quantity-input').prop('disabled', true);
+                } else {
+                    $group.find('.quantity-input').prop('disabled', false);
+
+                    // Check if stock is less than or equal to the threshold
+                    if (stock <= threshold) {
+                        $group.find('.stock-warning').show();
+                    }
+                }
+            });
+
             $('input[name="total_amount"]').on("blur change", function(){
                 let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
                 $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);

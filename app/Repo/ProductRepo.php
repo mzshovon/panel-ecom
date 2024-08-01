@@ -33,6 +33,7 @@ final readonly class ProductRepo
                     'stock',
                     'price',
                     'previous_price',
+                    'purchase_cost',
                     'variants',
                     'tentative_delivery_date',
                     'updated_by',

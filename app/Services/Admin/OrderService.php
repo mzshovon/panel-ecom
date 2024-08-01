@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 use App\Contracts\Admin\OrderServiceInterface;
 use App\Models\OrderProduct;
 use App\Repo\OrderRepo;
+use App\Repo\ProductRepo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +13,8 @@ class OrderService implements OrderServiceInterface
 {
     function __construct(
         private readonly orderRepo $orderRepo,
-        private readonly OrderProduct $orderProductRepo
+        private readonly OrderProduct $orderProductRepo,
+        private readonly ProductRepo $productRepo,
     ) {
     }
 
@@ -44,6 +46,35 @@ class OrderService implements OrderServiceInterface
     function createOrder(array $request): bool
     {
         $request['created_by'] = auth()->user()->id;
+        foreach ($request['products'] as $index => $productId) {
+            $product = $this->productRepo->getByColumn("id",$productId);
+            $quantity = $request['quantities'][$index];
+
+            if ($product->stock < $quantity) {
+                return redirect()->back()->withErrors(['error' => 'Not enough stock for ' . $product->name]);
+            }
+
+            if ($product->stock == 0) {
+                return redirect()->back()->withErrors(['error' => $product->name . ' is out of stock and cannot be ordered.']);
+            }
+
+            // Create order product record
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'price' => $product->price,
+                'purchase_cost' => $product->cost,
+            ]);
+
+            // Reduce stock
+            $product->stock -= $quantity;
+            $product->save();
+
+            // Calculate total amount
+            $totalAmount += $product->price * $quantity;
+        }
+        dd($request);
         $data = $this->orderRepo->create($request);
         return $data ? true : false;
     }

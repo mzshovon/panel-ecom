@@ -37,6 +37,12 @@ class Order extends Model
     {
         parent::boot();
 
+        static::creating(function ($order) {
+            if ($order->status == 'confirmed' || $order->status == 'delivered') {
+                $order->incrementProductQuantities();
+            }
+        });
+
         static::updating(function ($order) {
             $originalStatus = $order->getOriginal('status');
             $newStatus = $order->status;

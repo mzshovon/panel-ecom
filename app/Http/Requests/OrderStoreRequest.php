@@ -32,6 +32,8 @@ class OrderStoreRequest extends FormRequest
             "total_amount_after_discount" => "required|string",
             "status" => "required|string",
             "payment_type" => "required|string|in:Cash on delivery,Payment Gateway,card,mfs",
+            'products.*' => 'required|exists:products,id',
+            'quantities.*' => 'required|integer|min:1',
         ];
     }
 }

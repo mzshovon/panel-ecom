@@ -80,14 +80,12 @@
                     </span>
                   </div>
                 </div>
-
               </div>
             </div>
-
           </div><!-- End Customers Card -->
 
           <!-- Reports -->
-          <div class="col-12">
+          {{-- <div class="col-12">
             <div class="card">
 
               <div class="filter">
@@ -96,31 +94,27 @@
                   <li class="dropdown-header text-start">
                     <h6>Filter</h6>
                   </li>
-
                   <li><a class="dropdown-item" href="#">Today</a></li>
                   <li><a class="dropdown-item" href="#">This Month</a></li>
                   <li><a class="dropdown-item" href="#">This Year</a></li>
                 </ul>
               </div>
-
               <div class="card-body">
                 <h5 class="card-title">Reports <span>/Today</span></h5>
                 <div id="reportsChart"></div>
               </div>
             </div>
-          </div><!-- End Reports -->
+          </div><!-- End Reports --> --}}
 
           <!-- Recent Sales -->
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
-
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   <li class="dropdown-header text-start">
                     <h6>Filter</h6>
                   </li>
-
                   <li><a class="dropdown-item" href="#">Today</a></li>
                   <li><a class="dropdown-item" href="#">This Month</a></li>
                   <li><a class="dropdown-item" href="#">This Year</a></li>
@@ -154,9 +148,7 @@
                     @endforelse
                   </tbody>
                 </table>
-
               </div>
-
             </div>
           </div><!-- End Recent Sales -->
 
@@ -179,7 +171,6 @@
 
               <div class="card-body pb-0">
                 <h5 class="card-title">Top Selling <span>| Today</span></h5>
-
                 <table class="table table-borderless">
                   <thead>
                     <tr>
@@ -202,21 +193,15 @@
                     @empty
                         No product available!
                     @endforelse
-
                   </tbody>
                 </table>
-
               </div>
-
             </div>
-          </div><!-- End Top Selling -->
-
+          </div>
         </div>
-      </div><!-- End Left side columns -->
+      </div>
 
-      <!-- Right side columns -->
       <div class="col-lg-4">
-
         <!-- Budget Report -->
         <div class="card">
           <div class="filter">
