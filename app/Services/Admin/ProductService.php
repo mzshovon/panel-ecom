@@ -153,6 +153,7 @@ class ProductService implements ProductServiceInterface
             'stock',
             'price',
             'previous_price',
+            'purchase_cost',
             'tentative_delivery_date',
             'weight',
             'height',

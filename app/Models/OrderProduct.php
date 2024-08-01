@@ -70,4 +70,16 @@ class OrderProduct extends Model
             $product->increment('stock', $updatedQty);
         });
     }
+
+    public function getMostSoldProducts()
+    {
+        $mostSoldProducts = DB::table('order_products')
+        ->join('products', 'order_products.product_id', '=', 'products.id')
+        ->select('products.id', 'products.name', 'products.price', 'products.purchase_cost', 'order_products.price as order_price', DB::raw('SUM(order_products.quantity) as total_quantity_sold'))
+        ->groupBy('products.id', 'products.name', 'products.price', 'products.purchase_cost', 'order_price')
+        ->orderByDesc('total_quantity_sold')
+        ->get()
+        ->toArray();
+        return $mostSoldProducts;
+    }
 }

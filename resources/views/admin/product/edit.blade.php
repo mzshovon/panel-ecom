@@ -29,13 +29,17 @@
                             <label for="inputEmail5" class="form-label">Stock <span class="text-danger">*</span></label>
                             <input type="number" name="stock" class="form-control" id="inputEmail5" min="0" value="{{$product->stock ?? "N/A"}}">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="inputEmail5" class="form-label">Current Price (BDT) <span class="text-danger">*</span></label>
                             <input type="number" name="price" class="form-control" id="inputEmail5" min="0" value="{{$product->price ?? "N/A"}}">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="inputEmail5" class="form-label">Previous Price (BDT)</label>
                             <input type="number" name="previous_price" class="form-control" id="inputEmail5" min="0" value="{{$product->previous_price ?? "N/A"}}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Purchase Cost (BDT)</label>
+                            <input type="number" name="purchase_cost" class="form-control" id="inputEmail5" min="0" value="{{$product->purchase_cost ?? "N/A"}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputEmail5" class="form-label">Height</label>

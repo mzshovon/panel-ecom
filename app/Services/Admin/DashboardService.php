@@ -2,13 +2,16 @@
 
 namespace App\Services\Admin;
 
+use App\Models\OrderProduct;
 use App\Repo\OrderRepo;
+use App\Repo\UserRepo;
 use App\Services\TrafficCacheService;
 
 class DashboardService {
 
     public function __construct(
-        private readonly OrderRepo $orderRepo
+        private readonly OrderRepo $orderRepo,
+        private readonly UserRepo $userRepo,
     )
     {
 
@@ -22,6 +25,8 @@ class DashboardService {
         $data['total_traffic'] = $total_traffic;
         $data['orders'] = $this->getRecentSales();
         $data['sales'] = $this->getSalesDataSet();
+        $data['users'] = $this->getUsersDataSet();
+        $data['most_sold_products'] = $this->getMostSalesProductList();
         return $data;
     }
 
@@ -50,7 +55,13 @@ class DashboardService {
                 if(isset($explodedUri[0]) && $explodedUri[0]) {
                     $traffic[] = [
                         "value" => $val,
-                        "name" =>  $explodedUri[0],
+                        "name" =>  ucfirst($explodedUri[0]),
+                    ];
+                }
+                if(empty($explodedUri[0]) && empty($explodedUri[1])) {
+                    $traffic[] = [
+                        "value" => $val,
+                        "name" =>  "Home",
                     ];
                 }
             }
@@ -63,6 +74,18 @@ class DashboardService {
     {
         $sales = $this->orderRepo->getOrderRatio();
         return (array)$sales;
+    }
+
+    private function getUsersDataSet() : array
+    {
+        $users = $this->userRepo->getUserRatio();
+        return (array)$users;
+    }
+
+    private function getMostSalesProductList() : array
+    {
+        $roderProducts = (new OrderProduct)->getMostSoldProducts();
+        return $roderProducts;
     }
 
 }
