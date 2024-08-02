@@ -8,9 +8,12 @@ use App\Repo\OrderRepo;
 use App\Repo\ProductRepo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderService implements OrderServiceInterface
 {
+    const PRODUCT_STOCK_THRESHOLD = 2;
+
     function __construct(
         private readonly orderRepo $orderRepo,
         private readonly OrderProduct $orderProductRepo,
@@ -41,42 +44,67 @@ class OrderService implements OrderServiceInterface
     /**
      * @param array $request
      *
-     * @return bool
+     * @return array
      */
-    function createOrder(array $request): bool
+    function createOrder(array $request): array
     {
-        $request['created_by'] = auth()->user()->id;
-        foreach ($request['products'] as $index => $productId) {
-            $product = $this->productRepo->getByColumn("id",$productId);
-            $quantity = $request['quantities'][$index];
+        $warningMessage = null;
+        $createdBy = auth()->user()->id;
+        if(count($request['product_id']) > 0) {
+            $orderProductInsertArray = [];
 
-            if ($product->stock < $quantity) {
-                return redirect()->back()->withErrors(['error' => 'Not enough stock for ' . $product->name]);
+            $products = $request['product_id'];
+            $quantities = $request['quantities'];
+            $purchaseCost = $request['purchase_cost'];
+            $request['created_by'] = $createdBy;
+
+            unset($request['products']);
+            unset($request['quantities']);
+            unset($request['purchase_cost']);
+            unset($request['prices']);
+
+            $order = $this->orderRepo->create($request);
+
+            if($order) {
+                foreach ($products as $index => $productId) {
+                    $product = $this->productRepo->getByColumn("id", $productId);
+                    $quantity = $quantities[$index];
+
+                    if ($product->stock < $quantity) {
+                        return [Response::HTTP_NOT_FOUND, 'Not enough stock for ' . $product->name];
+                    }
+
+                    if ($product->stock == 0) {
+                        return [Response::HTTP_NOT_FOUND, $product->name . ' is out of stock and cannot be ordered.'];
+                    }
+
+                    if (($product->stock - $quantity) <= self::PRODUCT_STOCK_THRESHOLD) {
+                        $warningMessage .= "{$product->name} stock is low. \n";
+                    }
+
+                    // Create order product record
+                    $orderProductInsertArray[] = [
+                        'order_id' => $order->id,
+                        'product_id' => $productId,
+                        'quantity' => $quantity,
+                        'price' => $product->price,
+                        'purchase_cost' => $purchaseCost[$index],
+                        'created_by' => $createdBy,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                }
             }
 
-            if ($product->stock == 0) {
-                return redirect()->back()->withErrors(['error' => $product->name . ' is out of stock and cannot be ordered.']);
+            if(!empty($orderProductInsertArray)) {
+                $insertOrderProducts = OrderProduct::insert($orderProductInsertArray);
+                return $insertOrderProducts ?
+                    [Response::HTTP_OK, "Order saved successfully. $warningMessage"] :
+                    [Response::HTTP_NOT_FOUND, "There is something went wrong while creating order"];
             }
-
-            // Create order product record
-            OrderProduct::create([
-                'order_id' => $order->id,
-                'product_id' => $productId,
-                'quantity' => $quantity,
-                'price' => $product->price,
-                'purchase_cost' => $product->cost,
-            ]);
-
-            // Reduce stock
-            $product->stock -= $quantity;
-            $product->save();
-
-            // Calculate total amount
-            $totalAmount += $product->price * $quantity;
         }
-        dd($request);
-        $data = $this->orderRepo->create($request);
-        return $data ? true : false;
+
+        return [Response::HTTP_NOT_FOUND, "Order can't be processed this time"];
     }
 
     /**

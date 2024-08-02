@@ -10,6 +10,7 @@ use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use Exception;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
@@ -60,9 +61,14 @@ class OrderController extends Controller
     public function store(OrderStoreRequest $request)
     {
         try {
-            $store = $this->repo->createOrder($request->all());
-            return redirect()->back()->with("success", "Order {$request['name']} has been created successfully!");
+            [$status, $message] = $this->repo->createOrder($request->all());
+            if($status == Response::HTTP_OK) {
+                return redirect()->back()->with("success", $message);
+            } else {
+                return redirect()->back()->with("error", $message);
+            }
         } catch (Exception $ex) {
+            dd($ex);
             return redirect()->back()->with("error", $ex->getMessage());
         }
     }
