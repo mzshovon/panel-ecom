@@ -20,7 +20,13 @@ class UserService implements UserServiceInterface
      */
     function getDashboardData():array
     {
-        return [];
+        $allStatuses = ['pending', 'delivered', 'returned'];
+        $data = [];
+        $orders = $this->getUserOrderList();
+        $data['status_wise_orders_count'] = collect($allStatuses)->mapWithKeys(function ($status) use ($orders) {
+            return [$status => collect($orders)->where('status', $status)->count()];
+        })->toArray();
+        return $data;
     }
 
     /**

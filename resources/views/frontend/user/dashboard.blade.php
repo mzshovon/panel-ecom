@@ -14,7 +14,7 @@
 				<nav aria-label="breadcrumb">
 				  <ol class="breadcrumb bg-transparent justify-content-center">
 				    <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-				    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+				    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
 				  </ol>
 				</nav>
 				</div>
@@ -34,7 +34,60 @@
                         @csrf
                     </form>
                 </p>
-				From your account dashboard you can view your <a href="{{ route('orders') }}">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details</a>.
+				From your account dashboard you can view your
+                <a href="{{ route('orders') }}">recent orders</a>, manage your
+                <a href="#">shipping and billing addresses</a> and
+                <a href="#">edit your password and account details</a>.
+                <div class="row mt-4">
+                    <div class="col-md-4 col-sm-6 col-6">
+                        <div class="card info-card sales-card">
+                        <div class="card-body">
+                            <h5 class="card-title-user">Pending Orders <span>| Total</span></h5>
+
+                            <div class="d-flex align-items-center">
+                            <div class="card-icon-user-pending rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="tf-ion-android-cart"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>{{$status_wise_orders_count["pending"]}}</h6>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-6">
+                        <div class="card info-card sales-card">
+                        <div class="card-body">
+                            <h5 class="card-title-user">Completed Orders <span>| Total</span></h5>
+
+                            <div class="d-flex align-items-center">
+                            <div class="card-icon-user-delivered rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="tf-ion-ios-checkmark"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>{{$status_wise_orders_count["delivered"]}}</h6>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-6">
+                        <div class="card info-card sales-card">
+                        <div class="card-body">
+                            <h5 class="card-title-user">Returned Orders <span>| Total</span></h5>
+
+                            <div class="d-flex align-items-center">
+                            <div class="card-icon-user-returned rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="tf-ion-ios-close"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>{{$status_wise_orders_count["returned"]}}</h6>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>

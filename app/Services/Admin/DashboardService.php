@@ -105,7 +105,7 @@ class DashboardService {
     {
         $orderProducts = [];
         if(Cache::has("most_sales")) {
-            $orderProducts = json_decode(Cache::get("most_sales"), true);
+            $orderProducts = json_decode(Cache::get("most_sales"));
         } else {
             $orderProducts = (new OrderProduct)->getMostSoldProducts();
             Cache::put("most_sales", json_encode($orderProducts), self::MOST_SALES_TTL);

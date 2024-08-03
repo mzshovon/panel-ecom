@@ -185,10 +185,10 @@
                     @forelse ($most_sold_products as $product)
                         <tr>
                             <th scope="row">{{$loop->iteration}}</th>
-                            <td><a href="{{route('admin.products.edit',['product'=>$product['id']])}}" class="text-primary fw-bold">{{$product['name']}}</a></td>
-                            <td>{{$product['price']}}</td>
-                            <td class="fw-bold">{{$product['total_quantity_sold']}}</td>
-                            <td>{{($product['total_quantity_sold'] * ($product['order_price'] - $product['purchase_cost']))}}</td>
+                            <td><a href="{{route('admin.products.edit',['product'=>$product->id])}}" class="text-primary fw-bold">{{$product->name}}</a></td>
+                            <td>{{$product->price}}</td>
+                            <td class="fw-bold">{{$product->total_quantity_sold}}</td>
+                            <td>{{($product->total_quantity_sold * ($product->order_price - $product->purchase_cost))}}</td>
                         </tr>
                     @empty
                         No product available!

@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         try {
             $data = [];
-            $data['userData'] = $this->repo->getDashboardData();
+            $data = $this->repo->getDashboardData();
             return view('frontend.user.dashboard', $data);
         } catch (\Exception $ex) {
             abort(Response::HTTP_NOT_FOUND, "Sorry No Data Found!");
