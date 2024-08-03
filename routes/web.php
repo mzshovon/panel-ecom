@@ -27,15 +27,15 @@ use Illuminate\Support\Facades\Route;
 */
     // User auth routes
     Route::get('/signup', [CustomRegisterController::class, 'showRegistrationForm'])->name('signup');
-    Route::post('/signup', [CustomRegisterController::class, 'register'])->name('signup');
+    Route::post('/signup', [CustomRegisterController::class, 'register'])->name('register');
     Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [CustomLoginController::class, 'login'])->name('login');
+    Route::post('/login', [CustomLoginController::class, 'login'])->name('user-login');
     Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
 
     Route::get('/', [HomePageController::class, 'home'])->name('home')->middleware("traffic");
     Route::get('/about', [HomePageController::class, 'about'])->name('about')->middleware("traffic");
     Route::get('/contact-us', [HomePageController::class, 'contactUs'])->name('contact-us')->middleware("traffic");
-    Route::post('/contact-us', [HomePageController::class, 'storeContactUs'])->name('contact-us');
+    Route::post('/contact-us', [HomePageController::class, 'storeContactUs'])->name('contact-us-store');
     Route::get('/search', [FrontendProductController::class, 'search'])->name('search')->middleware("traffic");
     Route::get('/product/{productId}', [FrontendProductController::class, 'singleProduct'])->name('single-product')->middleware("traffic");
     Route::post('/product/review', [FrontendProductController::class, 'storeProductReview'])->name('store-review');
@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Route;
 
     // Admin auth routes
     Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
+    Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login.check');
     Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'role:superadmin|admin']], function() {
