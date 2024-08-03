@@ -49,6 +49,9 @@ class Order extends Model
             if ($originalStatus == 'pending' && $newStatus == 'confirmed') {
                 $order->decrementProductQuantities();
             }
+            if ($originalStatus == 'pending' && $newStatus == 'delivered') {
+                $order->decrementProductQuantities();
+            }
             if ($newStatus == 'returned' || $newStatus == 'cancelled') {
                 $order->incrementProductQuantities();
             }

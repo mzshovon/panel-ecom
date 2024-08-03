@@ -6,6 +6,8 @@ use App\Models\OrderProduct;
 use App\Repo\OrderRepo;
 use App\Repo\UserRepo;
 use App\Services\TrafficCacheService;
+use App\Services\Wrapper\HttpCallService;
+use Illuminate\Support\Facades\Cache;
 
 class DashboardService {
 
@@ -27,6 +29,7 @@ class DashboardService {
         $data['sales'] = $this->getSalesDataSet();
         $data['users'] = $this->getUsersDataSet();
         $data['most_sold_products'] = $this->getMostSalesProductList();
+        $data['latest_news'] = $this->getLatestNews();
         return $data;
     }
 
@@ -70,22 +73,67 @@ class DashboardService {
         return [$traffic, $total_traffic];
     }
 
+    /**
+     * @return array
+     */
     private function getSalesDataSet() : array
     {
         $sales = $this->orderRepo->getOrderRatio();
         return (array)$sales;
     }
 
+    /**
+     * @return array
+     */
     private function getUsersDataSet() : array
     {
         $users = $this->userRepo->getUserRatio();
         return (array)$users;
     }
 
+    /**
+     * @return array
+     */
     private function getMostSalesProductList() : array
     {
-        $roderProducts = (new OrderProduct)->getMostSoldProducts();
-        return $roderProducts;
+        $orderProducts = (new OrderProduct)->getMostSoldProducts();
+        return $orderProducts;
+    }
+
+    /**
+     * @return array
+     */
+    private function getLatestNews() : array
+    {
+        $news = [];
+        if(Cache::has("latest_news")) {
+            $news = json_decode(Cache::get("latest_news"), true);
+        } else {
+            $url = config('website.api.news.endpoint');
+            $queryParams = [
+                "country" => "bd",
+                "apikey" => config('website.api.news.api_key'),
+            ];
+            $response = (new HttpCallService)->get($url, $queryParams);
+            if(!empty($response) && isset($response['results'])) {
+                $news = $this->getBdNewsOnly($response['results']);
+                Cache::put("latest_news", json_encode($news), 2 * 60 * 60);
+            }
+        }
+        return $news;
+    }
+
+    /**
+     * @param array $results
+     *
+     * @return array
+     */
+    private function getBdNewsOnly(array $results) : array
+    {
+        $filteredNews = collect($results)->filter(function ($item) {
+            return isset($item['country']) && count($item['country']) === 1 && strtolower($item['country'][0]) === 'bangladesh';
+        })->toArray();
+        return $filteredNews;
     }
 
 }

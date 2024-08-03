@@ -160,3 +160,22 @@ if (!function_exists('cartCount')) {
         return $count;
     }
 }
+
+if (!function_exists('shortenLongText')) {
+    /**
+     * Use if your filtering logic is:
+     * If user doesn't select from and to, then it returns null
+     *
+     * @return string
+     */
+    function shortenLongText($text, $maxLength = 50) : string
+    {
+        if (strlen($text) <= $maxLength) {
+            return $text;
+        }
+
+        // Truncate the text and add an ellipsis
+        return substr($text, 0, $maxLength) . '...';
+    }
+}
+

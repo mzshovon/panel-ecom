@@ -66,34 +66,7 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderRepo->create($request);
 
             if($order) {
-                foreach ($products as $index => $productId) {
-                    $product = $this->productRepo->getByColumn("id", $productId);
-                    $quantity = $quantities[$index];
-
-                    if ($product->stock < $quantity) {
-                        return [Response::HTTP_NOT_FOUND, 'Not enough stock for ' . $product->name];
-                    }
-
-                    if ($product->stock == 0) {
-                        return [Response::HTTP_NOT_FOUND, $product->name . ' is out of stock and cannot be ordered.'];
-                    }
-
-                    if (($product->stock - $quantity) <= self::PRODUCT_STOCK_THRESHOLD) {
-                        $warningMessage .= "{$product->name} stock is low. \n";
-                    }
-
-                    // Create order product record
-                    $orderProductInsertArray[] = [
-                        'order_id' => $order->id,
-                        'product_id' => $productId,
-                        'quantity' => $quantity,
-                        'price' => $product->price,
-                        'purchase_cost' => $purchaseCost[$index],
-                        'created_by' => $createdBy,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
-                }
+                [$orderProductInsertArray, $warningMessage] = $this->formatProductOrderDataForStore($products, $quantities, $purchaseCost, $order);
             }
 
             if(!empty($orderProductInsertArray)) {
@@ -245,5 +218,50 @@ class OrderService implements OrderServiceInterface
         $decodedStatusMapArray = json_decode($statusMap, true);
         $decodedStatusMapArray[] = $newMap;
         return $decodedStatusMapArray;
+    }
+
+    /**
+     * @param array $products
+     * @param array $quantities
+     * @param array $purchaseCost
+     * @param Model $order
+     *
+     * @return array
+     */
+    private function formatProductOrderDataForStore(array $products, array $quantities, array $purchaseCost, Model $order) : array
+    {
+        $orderProductInsertArray = [];
+        $warningMessage = null;
+        $createdBy = auth()->user()->id;
+        foreach ($products as $index => $productId) {
+            $product = $this->productRepo->getByColumn("id", $productId);
+            $quantity = $quantities[$index];
+
+            if ($product->stock < $quantity) {
+                return [Response::HTTP_NOT_FOUND, 'Not enough stock for ' . $product->name];
+            }
+
+            if ($product->stock == 0) {
+                return [Response::HTTP_NOT_FOUND, $product->name . ' is out of stock and cannot be ordered.'];
+            }
+
+            if (($product->stock - $quantity) <= self::PRODUCT_STOCK_THRESHOLD) {
+                $warningMessage .= "{$product->name} stock is low. \n";
+            }
+
+            // Create order product record
+            $orderProductInsertArray[] = [
+                'order_id' => $order->id,
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'price' => $product->price,
+                'purchase_cost' => $purchaseCost[$index],
+                'created_by' => $createdBy,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+        }
+
+        return [$orderProductInsertArray, $warningMessage];
     }
 }

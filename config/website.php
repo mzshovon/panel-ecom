@@ -32,5 +32,11 @@ return [
         "sundarban",
         "sa paribahan",
         "by office",
+    ],
+    "api" => [
+        "news" => [
+            "endpoint" => env('NEWS_API_ENDPOINT', "test.com"),
+            "api_key" => env('NEWS_API_KEY', "112234"),
+        ]
     ]
 ];
