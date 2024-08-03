@@ -19,6 +19,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Invoice No.</th>
                         <th scope="col">Order Amount</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Discount</th>
@@ -36,6 +37,7 @@
                     <tr data-id={{$order['id']}}>
                         <th scope="row">{{$order['id']}}</th>
                         <td>{{$order['name']}}</td>
+                        <td><b>{{$order['invoice_no'] ?? "N/A"}}</b></td>
                         <td>{{$order['total_amount_after_discount']}}</td>
                         <td>{{$order['quantity']}}</td>
                         <td>{{$order['total_discount']}}</td>

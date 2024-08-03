@@ -138,7 +138,7 @@
                     @forelse ($orders as $order)
                     <tr>
                         <th scope="row"><a href="#">#{{$order['id']}}</a></th>
-                        <td>{{$order['ordered_by']['name']}}</td>
+                        <td>{{$order['name']}}</td>
                         <td>{{$order['total_amount']}} TK.</td>
                         <td>{{$order['total_amount_after_discount']}} TK.</td>
                         <td class="text-primary">{{$order['status']}}</td>
@@ -257,7 +257,7 @@
                     <div class="post-item clearfix">
                         <img src="{{$news['image_url']}}" alt="">
                         <h4><a href="{{$news['link']}}">{{$news['title']}}</a></h4>
-                        <p>{{shortenLongText($news['description'], 400)}}</p>
+                        <p>{{$news['description'] ? shortenLongText($news['description'], 400) : "No descripton available!"}}</p>
                     </div>
                 @empty
                     No news update is sync right now!
