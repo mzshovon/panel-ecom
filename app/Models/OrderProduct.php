@@ -71,7 +71,10 @@ class OrderProduct extends Model
         });
     }
 
-    public function getMostSoldProducts()
+    /**
+     * @return array
+     */
+    public function getMostSoldProducts() : array
     {
         $mostSoldProducts = DB::table('order_products')
         ->join('products', 'order_products.product_id', '=', 'products.id')

@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Cache;
 
 class DashboardService {
 
+    const RECENT_SALES_TTL = 0.5 * 60 * 60;
+    const MOST_SALES_TTL = 0.5 * 60 * 60;
+    const NEWS_TTL = 2 * 60 * 60;
+
     public function __construct(
         private readonly OrderRepo $orderRepo,
         private readonly UserRepo $userRepo,
-    )
-    {
-
-    }
+    ){}
 
     function getDashboardData() : array
     {
@@ -38,7 +39,13 @@ class DashboardService {
      */
     private function getRecentSales() : array
     {
-        $order = $this->orderRepo->get(["*"], 10);
+        $order = [];
+        if(Cache::has("recent_sales")) {
+            $order = json_decode(Cache::get("recent_sales"), true);
+        } else {
+            $order = $this->orderRepo->get(["*"], 10);
+            Cache::put("recent_sales", json_encode($order), self::RECENT_SALES_TTL);
+        }
         return $order;
     }
 
@@ -96,7 +103,13 @@ class DashboardService {
      */
     private function getMostSalesProductList() : array
     {
-        $orderProducts = (new OrderProduct)->getMostSoldProducts();
+        $orderProducts = [];
+        if(Cache::has("most_sales")) {
+            $orderProducts = json_decode(Cache::get("most_sales"), true);
+        } else {
+            $orderProducts = (new OrderProduct)->getMostSoldProducts();
+            Cache::put("most_sales", json_encode($orderProducts), self::MOST_SALES_TTL);
+        }
         return $orderProducts;
     }
 
@@ -117,7 +130,7 @@ class DashboardService {
             $response = (new HttpCallService)->get($url, $queryParams);
             if(!empty($response) && isset($response['results'])) {
                 $news = $this->getBdNewsOnly($response['results']);
-                Cache::put("latest_news", json_encode($news), 2 * 60 * 60);
+                Cache::put("latest_news", json_encode($news), self::NEWS_TTL);
             }
         }
         return $news;
