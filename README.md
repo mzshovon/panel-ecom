@@ -12,7 +12,7 @@ Ecom Mart BD is a one stop solution for ecommerce business with digital marketin
 Install Ecom Mart BD with laravel
 
 ```bash
-  composer Install
+  composer install
   php artisan key:generate
   php artisan optimize:clear
 ```
