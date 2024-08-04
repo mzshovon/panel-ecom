@@ -5,10 +5,16 @@ namespace App\Repo;
 use App\Models\Product;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 final readonly class ProductRepo
 {
     private Model $model;
+
+    const ALL_PRODUCTS_CACHE_KEY = "all_products";
+    const UPCOMING_PRODUCTS_CACHE_KEY = "upcoming_products";
+    const LATEST_PRODUCTS_CACHE_KEY = "latest_products";
+    const TTL = 60 * 60;
 
     /**
      * @param private
@@ -24,7 +30,11 @@ final readonly class ProductRepo
     function get() : array
     {
         try {
-            $data = $this->model::with("updatedBy", "images")
+            if(Cache::has(self::ALL_PRODUCTS_CACHE_KEY)) {
+                return json_decode(Cache::get(self::ALL_PRODUCTS_CACHE_KEY), true);
+            }
+            else {
+                $data = $this->model::with("updatedBy", "images")
                 ->orderBy("updated_at", "desc")
                 ->get([
                     'id',
@@ -40,7 +50,14 @@ final readonly class ProductRepo
                     'created_at'
                 ])
                 ->toArray();
-            return !empty($data) ? $data : [];
+                if(!empty($data)) {
+                    Cache::put(self::ALL_PRODUCTS_CACHE_KEY, json_encode($data), self::TTL);
+                    return $data;
+                } else {
+                    return [];
+                }
+            }
+
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }
@@ -93,7 +110,10 @@ final readonly class ProductRepo
     function upcoming($num = 3) : array
     {
         try {
-            $data = $this->model::with("updatedBy", "images")
+            if(Cache::has(self::UPCOMING_PRODUCTS_CACHE_KEY)) {
+                return json_decode(Cache::get(self::UPCOMING_PRODUCTS_CACHE_KEY), true);
+            } else {
+                $data = $this->model::with("updatedBy", "images")
                 ->where('sections', 'LIKE', '%upcoming%')
                 ->orderBy("updated_at", "desc")
                 ->get([
@@ -106,7 +126,13 @@ final readonly class ProductRepo
                 ])
                 ->take($num)
                 ->toArray();
-            return !empty($data) ? $data : [];
+                if(!empty($data)) {
+                    Cache::put(self::UPCOMING_PRODUCTS_CACHE_KEY, json_encode($data), self::TTL);
+                    return $data;
+                } else {
+                    return [];
+                }
+            }
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }

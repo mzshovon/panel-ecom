@@ -119,21 +119,25 @@ class DashboardService {
     private function getLatestNews() : array
     {
         $news = [];
-        if(Cache::has("latest_news")) {
-            $news = json_decode(Cache::get("latest_news"), true);
-        } else {
-            $url = config('website.api.news.endpoint');
-            $queryParams = [
-                "country" => "bd",
-                "apikey" => config('website.api.news.api_key'),
-            ];
-            $response = (new HttpCallService)->get($url, $queryParams);
-            if(!empty($response) && isset($response['results'])) {
-                $news = $this->getBdNewsOnly($response['results']);
-                Cache::put("latest_news", json_encode($news), self::NEWS_TTL);
+        try {
+            if(Cache::has("latest_news")) {
+                $news = json_decode(Cache::get("latest_news"), true);
+            } else {
+                $url = config('website.api.news.endpoint');
+                $queryParams = [
+                    "country" => "bd",
+                    "apikey" => config('website.api.news.api_key'),
+                ];
+                $response = (new HttpCallService)->get($url, $queryParams);
+                if(!empty($response) && isset($response['results'])) {
+                    $news = $this->getBdNewsOnly($response['results']);
+                    Cache::put("latest_news", json_encode($news), self::NEWS_TTL);
+                }
             }
+            return $news;
+        } catch (\Exception $ex) {
+            return $news;
         }
-        return $news;
     }
 
     /**
