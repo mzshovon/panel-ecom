@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Role;
 use App\Repo\CategoryRepo;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -176,6 +177,19 @@ if (!function_exists('shortenLongText')) {
 
         // Truncate the text and add an ellipsis
         return substr($text, 0, $maxLength) . '...';
+    }
+}
+
+if (!function_exists('rolesList')) {
+    /**
+     * Use if your filtering logic is:
+     * If user doesn't select from and to, then it returns null
+     *
+     * @return array
+     */
+    function rolesList() : array
+    {
+        return Role::all()->toArray();
     }
 }
 

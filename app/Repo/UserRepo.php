@@ -26,8 +26,8 @@ final readonly class UserRepo
     function get() : array
     {
         try {
-            $data = $this->model::orderBy("updated_at", "desc")
-                ->get(['id', 'name', 'email', 'status', 'created_at'])
+            $data = $this->model::with("roles")->orderBy("updated_at", "desc")
+                ->get(['id', 'name', 'email', 'mobile', 'status', 'created_at'])
                 ->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {
