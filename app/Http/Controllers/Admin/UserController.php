@@ -15,10 +15,10 @@ class UserController extends Controller
     const CREATE_PAGE = "Create Users";
     const UPDATE_PAGE = "Update Users";
 
-    public function __construct(private UserServiceInterface $repo)
-    {
-
-    }
+    public function __construct(
+        private UserServiceInterface $repo
+    )
+    {}
     /**
      * Display a listing of the resource.
      */

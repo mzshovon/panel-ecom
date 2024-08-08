@@ -14,7 +14,7 @@
 
         <li class="nav-item">
             <a class="nav-link {{ in_array($route, ['admin.users.index']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.users.index')}}">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-people"></i>
                 <span>Users</span>
             </a>
         </li><!-- End Dashboard Nav -->
@@ -30,6 +30,13 @@
             <a class="nav-link {{ in_array($route, ['admin.orders.index']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.orders.index')}}">
                 <i class="bi bi-box"></i>
                 <span>Orders</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link {{ in_array($route, ['admin.roles.index']) ? 'nav-item-active-a' : 'collapsed' }}" href="{{route('admin.roles.index')}}">
+                <i class="bi bi-person-square"></i>
+                <span>Roles</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
