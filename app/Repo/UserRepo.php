@@ -52,6 +52,21 @@ final readonly class UserRepo
     }
 
     /**
+     * @param int $id
+     *
+     * @return Model|null
+     */
+    function findOrFail(int $id) : Model|null
+    {
+        try {
+            $data = $this->model::findOrFail($id);
+            return $data ?? null;
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
      * @param array $request
      *
      * @return Model

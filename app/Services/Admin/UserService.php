@@ -59,6 +59,10 @@ class UserService implements UserServiceInterface
         } else {
             unset($request['password']);
         }
+        if(isset($request['role'])) {
+            $user = $this->userRepo->findOrFail($id);
+            $user->syncRoles([$request['role']]);
+        }
         $data = $this->userRepo->update("id", $id, $this->fillableData($request));
         return $data ?? false;
     }

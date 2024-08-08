@@ -124,6 +124,24 @@ class UserController extends Controller
     }
 
     /**
+     * Update the status specified resource in storage.
+     */
+    public function assignRole(Request $request)
+    {
+        try {
+            $id = $request->user_id ?? null;
+            $update = $this->repo->updateUser($id, $request->all());
+            if($update) {
+                return redirect()->back()->with("success", "Role assigned successfully!");
+            } else {
+                return redirect()->back()->with("error", "Something went wrong while assigning role to id #{$id}!");
+            }
+        } catch (Exception $ex) {
+            return redirect()->back()->with("error", $ex->getMessage());
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)

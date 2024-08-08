@@ -12,7 +12,7 @@
                     <i class="bi bi-plus"></i></a>
             </h5>
             <br>
-            <!-- Table with stripped rows -->
+            @include('admin.layouts.partials.alerts')
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -33,7 +33,7 @@
                         <td>{{$user['name']}}</td>
                         <td>{{$user['email']}}</td>
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="updateRoleModalShow(`{{ $user['roles'][0]['id'] ?? 'N/A' }}`, `{{ $user['roles'][0]['name'] ?? 'N/A' }}`)">
+                            <button class="btn btn-primary btn-sm" onclick="updateRoleModalShow(`{{ $user['id'] }}`, `{{ $user['roles'][0]['id'] ?? 'N/A' }}`, `{{ $user['roles'][0]['name'] ?? 'N/A' }}`)">
                                 {{$user['roles'][0]['name'] ?? "N/A"}}
                             </button>
                         </td>
@@ -79,10 +79,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('admin.orders.status.change') }}" method="POST" class="mx-3">
+                    <form action="{{ route('admin.users.assign.role') }}" method="POST" class="mx-3">
                         @csrf
-                        <input type="hidden" name="role_id" id="id_role_id">
-                        <select name="status" id="status_id" class="form-control" required>
+                        <input type="hidden" name="user_id" id="id_user_id">
+                        <select name="role" id="status_id" class="form-control" required>
                             <option value="">Select a Role</option>
                             @foreach (rolesList() as $role)
                             <option class="role-{{ $role['id'] }}" value="{{ $role['id'] }}">
@@ -104,11 +104,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{URL::to('/')}}/public/assets/js/custom.js"></script>
     <script>
-        function updateRoleModalShow(roleId, role) {
+        function updateRoleModalShow(userId, roleId, role) {
             if(roleId == "" || roleId == null){
                 return false
             }
-            $("#id_order_id").val(roleId);
+            $("#id_user_id").val(userId);
+            $("#id_role_id").val(roleId);
             $("#id_prev_status").val(role);
             if (role && roleId !== "N/A") {
                 $(`.role-${roleId}`).prop('selected', true);

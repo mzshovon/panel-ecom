@@ -43,7 +43,17 @@
                             <input type="password" name="password_confirmation" class="form-control"
                                 id="inputPassword5">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="inputState" class="form-label">Assign Role</label>
+                            <input type="hidden" name="role_id" class="form-control" value="{{$user->roles->first()->id}}">
+                            <select id="inputState" name="role" class="form-select">
+                                @forelse (rolesList() as $role)
+                                    <option class="role-{{$role['id']}}" value="{{$role['id']}}">{{ ucfirst($role['name']) }}</option>
+                                @empty
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="col-md-2">
                             <label for="inputCity" class="form-label">City</label>
                             <input type="text" name="city" class="form-control" id="inputCity" value="{{$user->city ?? ""}}">
                         </div>
@@ -80,4 +90,14 @@
 
     </div>
 </section>
+@endsection
+@section('scripts')
+    <script>
+        let roleId = $("input[name='role_id']").val();
+        if (roleId) {
+            $(`.role-${roleId}`).prop('selected', true);
+        } else {
+            $(`.role-${roleId}`).prop('selected', false);
+        }
+    </script>
 @endsection
