@@ -15,7 +15,10 @@ final readonly class OrderRepo
     /**
      * @param  private
      */
-    function __construct(private Order $order)
+    function __construct(
+        private Order $order,
+        private readonly ProductRepo $productRepo
+    )
     {
         $this->model = $order;
     }
@@ -63,6 +66,7 @@ final readonly class OrderRepo
     function create(array $request) : Model
     {
         try {
+            $this->productRepo->deleteProductCache();
             return $this->model::create($request);
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
@@ -79,6 +83,7 @@ final readonly class OrderRepo
     function update(string $column = "id", $value, array $request) : bool
     {
         try {
+            $this->productRepo->deleteProductCache();
             $order = $this->model::where($column, $value)->firstOrFail();
             // Update the order attributes
             $order->fill($request);
@@ -100,6 +105,7 @@ final readonly class OrderRepo
     function delete(string $column = "id", $value) : bool
     {
         try {
+            $this->productRepo->deleteProductCache();
             $order = $this->model::where($column, $value)->firstOrFail();
             return $order->delete() ? true : false;
         } catch (Exception $ex) {

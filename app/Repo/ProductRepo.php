@@ -162,6 +162,7 @@ final readonly class ProductRepo
     function create(array $request) : Model
     {
         try {
+            $this->deleteProductCache();
             return $this->model::create($request);
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
@@ -178,6 +179,7 @@ final readonly class ProductRepo
     function update(string $column = "id", $value, array $request) : bool
     {
         try {
+            $this->deleteProductCache();
             return $this->model::where($column, $value)->update($request);
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
@@ -193,9 +195,20 @@ final readonly class ProductRepo
     function delete(string $column = "id", $value) : bool
     {
         try {
+            $this->deleteProductCache();
             return $this->model::where($column, $value)->delete();
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function deleteProductCache() : void
+    {
+        Cache::delete(self::ALL_PRODUCTS_CACHE_KEY);
+        Cache::delete(self::LATEST_PRODUCTS_CACHE_KEY);
+        Cache::delete(self::UPCOMING_PRODUCTS_CACHE_KEY);
     }
 }
