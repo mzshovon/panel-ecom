@@ -30,7 +30,7 @@ final readonly class OrderRepo
     {
         try {
             $data = $this->model::with("products", "orderedBy")
-                ->orderBy("updated_at", "desc")
+                ->orderBy("invoice_no", "desc")
                 ->when($take, function($q) use ($take){
                     $q->take($take);
                 })
