@@ -57,7 +57,15 @@ final readonly class OrderRepo
                 ->orderBy("invoice_no", "desc");
             foreach ($request as $column => $value) {
                 if(!is_null($value)) {
-                    $query->where($column, "LIKE", "%{$value}%");
+                    if($column == "from_date" || $column == "to_date") {
+                        if($column == "from_date") {
+                            $query->where("created_at", ">=", $value);
+                        } if ($column == "to_date") {
+                            $query->where("created_at", "<=", $value);
+                        }
+                    } else {
+                        $query->where($column, "LIKE", "%{$value}%");
+                    }
                 }
             }
             $data = $query->get()->toArray();

@@ -23,10 +23,21 @@ class ProductService implements ProductServiceInterface
     /**
      * @return array
      */
-    function getProducts() : array
+    function getProducts(?array $request) : array
     {
-        $data = $this->productRepo->get();
-        return $data ?? [];
+        $data = [];
+        if(!empty($request)) {
+            if(isset($request['filter'])) {
+                unset($request['filter']);
+                $data = $this->productRepo->filter($request);
+            } else if(isset($request['download'])) {
+                unset($request['download']);
+                $data = $this->productRepo->filter($request);
+            }
+        } else {
+            $data = $this->productRepo->get();
+        }
+        return $data;
     }
 
     /**

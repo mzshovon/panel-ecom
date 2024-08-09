@@ -58,7 +58,11 @@
                                 @foreach ($product['images'] as $key => $image)
                                     <a href="{{route('single-product', ['productId' => $product['id']])}}">
                                         @if (in_array($key, [0,1]))
-                                                <img class="img-fluid latest-img mb-3 img-{{numberToOrdinal($key + 1)}}" src="{{URL::to("/") . "/" .$image['image_path']}}" alt="product-img"/>
+                                                <img class="img-fluid latest-img mb-3 img-{{numberToOrdinal($key + 1)}}"
+                                                    src="{{URL::to("/") . "/" .$image['image_path']}}"
+                                                    alt="product-img"
+                                                    loading="lazy"
+                                                />
                                         @endif
                                     </a>
                                 @endforeach

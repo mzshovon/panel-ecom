@@ -19,12 +19,12 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $data = [];
             $data['page'] = self::INDEX_PAGE;
-            $data['products'] = customPaginate($this->repo->getProducts(), 10);
+            $data['products'] = customPaginate($this->repo->getProducts($request->all()), 10);
             return view('admin.product.view', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());

@@ -64,6 +64,40 @@ final readonly class ProductRepo
     }
 
     /**
+     * @param array $request
+     *
+     * @return array
+     */
+    function filter(array $request) : array
+    {
+        try {
+            $query = $this->model::with("updatedBy", "images")
+            ->orderBy("updated_at", "desc");
+            foreach ($request as $column => $value) {
+                if(!is_null($value)) {
+                    $query->where($column, "LIKE", "%{$value}%");
+                }
+            }
+            $data = $query->get([
+                'id',
+                'name',
+                'sku',
+                'stock',
+                'price',
+                'previous_price',
+                'purchase_cost',
+                'variants',
+                'tentative_delivery_date',
+                'updated_by',
+                'created_at'
+            ])->toArray();
+            return !empty($data) ? $data : [];
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
      * @param int $num
      * @param string|null|null $search
      *
