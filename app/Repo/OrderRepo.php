@@ -24,9 +24,12 @@ final readonly class OrderRepo
     }
 
     /**
+     * @param array|null $columns
+     * @param int|null $take
+     *
      * @return array
      */
-    function get($columns = ["*"], $take = null) : array
+    function get(?array $columns = ["*"], ?int $take = null) : array
     {
         try {
             $data = $this->model::with("products", "orderedBy")
@@ -36,6 +39,28 @@ final readonly class OrderRepo
                 })
                 ->get($columns)
                 ->toArray();
+            return !empty($data) ? $data : [];
+        } catch (Exception $ex) {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * @param array $request
+     *
+     * @return array
+     */
+    function filter(array $request) : array
+    {
+        try {
+            $query = $this->model::with("products", "orderedBy")
+                ->orderBy("invoice_no", "desc");
+            foreach ($request as $column => $value) {
+                if(!is_null($value)) {
+                    $query->where($column, "LIKE", "%{$value}%");
+                }
+            }
+            $data = $query->get()->toArray();
             return !empty($data) ? $data : [];
         } catch (Exception $ex) {
             throw new Exception($ex->getMessage());

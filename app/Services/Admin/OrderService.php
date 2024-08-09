@@ -24,10 +24,21 @@ class OrderService implements OrderServiceInterface
     /**
      * @return array
      */
-    function getOrders(): array
+    function getOrders(?array $request): array
     {
-        $data = $this->orderRepo->get();
-        return $data ?? [];
+        $data = [];
+        if(!empty($request)) {
+            if(isset($request['filter'])) {
+                unset($request['filter']);
+                $data = $this->orderRepo->filter($request);
+            } else if(isset($request['download'])) {
+                unset($request['download']);
+                $data = $this->orderRepo->filter($request);
+            }
+        } else {
+            $data = $this->orderRepo->get();
+        }
+        return $data;
     }
 
     /**

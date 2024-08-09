@@ -7,10 +7,88 @@
 <section class="section">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">
-                <a class="btn btn-primary btn-md" href="{{route('admin.orders.create')}}" style="float: right">Add order
-                    <i class="bi bi-plus"></i></a>
-            </h5>
+            <div class="card-title">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Filter <i class="bi bi-funnel"></i>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <form class="row g-3" method="GET" action="{{route('admin.orders.index')}}">
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Name</label>
+                                                <input type="text" name="name" class="form-control" id="inputName5"
+                                                    value="{{old('name')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Invoice No</label>
+                                                <input type="text" name="invoice_no" class="form-control" id="inputName5"
+                                                    value="{{old('invoice_no')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Address</label>
+                                                <input type="text" name="address" class="form-control" id="inputName5"
+                                                    value="{{old('address')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Mobile</label>
+                                                <input type="text" name="mobile" class="form-control" id="inputName5"
+                                                    value="{{old('mobile')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Date From</label>
+                                                <input type="date" name="from_date" class="form-control" id="inputName5"
+                                                    value="{{old('name')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Date To</label>
+                                                <input type="date" name="to_date" class="form-control" id="inputName5"
+                                                    value="{{old('name')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Status</label>
+                                                <select name="status" class="form-control" required>
+                                                    <option selected disabled>Select status</option>
+                                                    @foreach ($orderStatus as $status)
+                                                    <option value="{{ $status }}">
+                                                        {{ ucfirst($status) }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="inputName5" class="form-label">Merchant ID</label>
+                                                <input type="text" name="merchant_id" class="form-control" id="inputName5"
+                                                    value="{{old('name')}}">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" name="filter" class="form-control btn btn-primary" id="inputName5"
+                                                    value="Filter">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" name="download" class="form-control btn btn-dark" id="inputName5"
+                                                    value="Download">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-primary btn-lg" href="{{route('admin.orders.create')}}"
+                            style="float: right;">Add order
+                            <i class="bi bi-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+
             <br>
             @include('admin.layouts.partials.alerts')
             <!-- Table with stripped rows -->

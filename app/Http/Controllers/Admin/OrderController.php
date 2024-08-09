@@ -26,12 +26,12 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $data = [];
             $data['page'] = self::INDEX_PAGE;
-            $data['orders'] = customPaginate($this->repo->getOrders(), 10);
+            $data['orders'] = customPaginate($this->repo->getOrders($request->all()), 10);
             $data['orderStatus'] = array_column(StatusEnum::cases(), 'value');
             return view('admin.order.view', $data);
         } catch (Exception $ex) {
