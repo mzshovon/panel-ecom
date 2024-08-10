@@ -31,7 +31,7 @@ class OrderController extends Controller
         try {
             $data = [];
             $data['page'] = self::INDEX_PAGE;
-            $data['orders'] = customPaginate($this->repo->getOrders($request->all()), 10);
+            $data['orders'] = customPaginate($this->repo->getOrders($request->all()), isset($request['filter']) ? 500 : 10);
             $data['orderStatus'] = array_column(StatusEnum::cases(), 'value');
             return view('admin.order.view', $data);
         } catch (Exception $ex) {

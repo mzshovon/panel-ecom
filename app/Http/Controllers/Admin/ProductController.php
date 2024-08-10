@@ -24,7 +24,7 @@ class ProductController extends Controller
         try {
             $data = [];
             $data['page'] = self::INDEX_PAGE;
-            $data['products'] = customPaginate($this->repo->getProducts($request->all()), 10);
+            $data['products'] = customPaginate($this->repo->getProducts($request->all()), isset($request['filter']) ? 500 : 10);
             return view('admin.product.view', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
