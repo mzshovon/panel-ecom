@@ -23,7 +23,7 @@ class ProductService implements ProductServiceInterface
     /**
      * @return array
      */
-    function getProducts(?array $request) : array
+    function getProducts(array $request = []) : array
     {
         $data = [];
         if(!empty($request)) {

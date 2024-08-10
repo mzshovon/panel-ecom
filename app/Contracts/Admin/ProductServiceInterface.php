@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ProductServiceInterface {
 
-    function getProducts(?array $request):array;
+    function getProducts(array $request = []):array;
     function getProductById(int $id) : Model|null;
     function getProductsVariants() : array;
     function getCategories() : array;
