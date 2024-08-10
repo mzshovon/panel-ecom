@@ -27,7 +27,7 @@ class OrderService implements OrderServiceInterface
     function getOrders(array $request = []): array
     {
         $data = [];
-        if(!empty($request)) {
+        if(!empty($request) && !isset($request['page'])) {
             if(isset($request['filter'])) {
                 unset($request['filter']);
                 $data = $this->orderRepo->filter($request);

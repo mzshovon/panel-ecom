@@ -26,7 +26,7 @@ class ProductService implements ProductServiceInterface
     function getProducts(array $request = []) : array
     {
         $data = [];
-        if(!empty($request)) {
+        if(!empty($request) && !isset($request['page'])) {
             if(isset($request['filter'])) {
                 unset($request['filter']);
                 $data = $this->productRepo->filter($request);
