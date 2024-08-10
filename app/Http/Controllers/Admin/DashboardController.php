@@ -15,14 +15,16 @@ class DashboardController extends Controller
         return view('admin.landing.dashboard', $data);
     }
 
-    function optimize()
+    function optimize(DashboardService $dashboardService)
     {
+        $dashboardService->backupCacheData();
         Artisan::call('optimize:clear');
         return redirect()->back()->with("success", "Website optimized successfully");
     }
 
-    function cacheClear()
+    function cacheClear(DashboardService $dashboardService)
     {
+        $dashboardService->backupCacheData();
         Artisan::call('cache:clear');
         return redirect()->back()->with("success", "Website cache has been cleared successfully");
     }
