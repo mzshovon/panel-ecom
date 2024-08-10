@@ -67,6 +67,7 @@ class OrderService implements OrderServiceInterface
             $products = $request['product_id'];
             $quantities = $request['quantities'];
             $purchaseCost = $request['purchase_cost'];
+            $productPrice = $request['prices'];
             $request['created_by'] = $createdBy;
 
             unset($request['products']);
@@ -77,7 +78,7 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderRepo->create($request);
 
             if($order) {
-                [$orderProductInsertArray, $warningMessage] = $this->formatProductOrderDataForStore($products, $quantities, $purchaseCost, $order);
+                [$orderProductInsertArray, $warningMessage] = $this->formatProductOrderDataForStore($products, $quantities, $purchaseCost, $productPrice, $order);
             }
 
             if(!empty($orderProductInsertArray)) {
@@ -239,7 +240,7 @@ class OrderService implements OrderServiceInterface
      *
      * @return array
      */
-    private function formatProductOrderDataForStore(array $products, array $quantities, array $purchaseCost, Model $order) : array
+    private function formatProductOrderDataForStore(array $products, array $quantities, array $purchaseCost, array $productPrice, Model $order) : array
     {
         $orderProductInsertArray = [];
         $warningMessage = null;
@@ -265,7 +266,7 @@ class OrderService implements OrderServiceInterface
                 'order_id' => $order->id,
                 'product_id' => $productId,
                 'quantity' => $quantity,
-                'price' => $product->price,
+                'price' => $productPrice[$index],
                 'purchase_cost' => $purchaseCost[$index],
                 'created_by' => $createdBy,
                 'created_at' => Carbon::now(),

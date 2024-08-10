@@ -113,10 +113,10 @@
                                         <span class="stock-error" style="display: none; color: red;">Product out of stock!</span>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" name="prices[]" class="price-input form-control" placeholder="Price" readonly>
+                                        <input type="text" name="prices[]" class="price-input form-control" placeholder="Price">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="number" name="purchase_cost[]" class="purchase-input form-control" placeholder="Purchase Cost" readonly>
+                                        <input type="number" name="purchase_cost[]" class="purchase-input form-control" placeholder="Purchase Cost">
                                     </div>
                                     <div class="col-md-1">
                                         <button class="btn btn-outline-primary btn-md" type="button" id="addProductBtn">Add</button>
@@ -180,6 +180,10 @@
                 }
             });
 
+            $('input[name="quantity"]').on("blur change", function(){
+                let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
+                $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);
+            });
             $('input[name="total_amount"]').on("blur change", function(){
                 let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
                 $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);
@@ -195,7 +199,8 @@
 
             function getTotalAmountAfterDiscount()
             {
-                let totalAmount = $('input[name="total_amount"]').val() ?? 0;
+                let totalQty = $('input[name="quantity"]').val() ?? 0;
+                let totalAmount = totalQty * $('input[name="total_amount"]').val() ?? 0;
                 let discount = $('input[name="total_discount"]').val() ?? 0;
                 let shippingCharge = $('input[name="shipping_charge"]').val() ?? 0;
                 let totalAmountAfterDiscount = parseInt(totalAmount) + parseInt(shippingCharge) - parseInt(discount);
