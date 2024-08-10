@@ -7,7 +7,9 @@ use App\Repo\OrderRepo;
 use App\Repo\UserRepo;
 use App\Services\TrafficCacheService;
 use App\Services\Wrapper\HttpCallService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardService {
 
@@ -151,6 +153,19 @@ class DashboardService {
             return isset($item['country']) && count($item['country']) === 1 && strtolower($item['country'][0]) === 'bangladesh';
         })->toArray();
         return $filteredNews;
+    }
+
+    /**
+     * @return void
+     */
+    function backupCacheData() : void
+    {
+        $data = [];
+        $now = Carbon::now();
+        $data['traffic'] = json_decode(Cache::get('traffic'), true);
+        $data['backup_at'] = $now->format("d-m-Y, h:i:s a");
+        $fileName = "backup_".$now->format("d_m_Y_h_i_s_a")."_.json";
+        Storage::disk("backup")->put($fileName, json_encode($data));
     }
 
 }
