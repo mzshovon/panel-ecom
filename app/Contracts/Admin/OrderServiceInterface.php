@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface OrderServiceInterface {
 
-    function getOrders(?array $request):array;
+    function getOrders(array $request = []):array;
     function getOrderById(int $id) : Model|null;
     function createOrder(array $request) : array;
     function updateOrder(int $id, array $request) : bool;

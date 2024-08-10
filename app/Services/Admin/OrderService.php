@@ -24,7 +24,7 @@ class OrderService implements OrderServiceInterface
     /**
      * @return array
      */
-    function getOrders(?array $request): array
+    function getOrders(array $request = []): array
     {
         $data = [];
         if(!empty($request)) {
