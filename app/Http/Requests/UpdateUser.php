@@ -26,7 +26,7 @@ class UpdateUser extends FormRequest
             "name" => "required|string|max:100",
             "email" => "required|email|unique:users,email,".$id,
             "password" => "nullable|alpha_num|confirmed|min:8",
-            "status" => "required|integer|in:0,1",
+            "status" => "nullable|integer|in:0,1",
             "city" => "nullable|string|max:50",
             "state" => "nullable|string|max:50",
             "zip" => "nullable|string|max:8",

@@ -14,6 +14,7 @@ class UserController extends Controller
     const INDEX_PAGE = "Users";
     const CREATE_PAGE = "Create Users";
     const UPDATE_PAGE = "Update Users";
+    const PROFILE_PAGE = "Profile";
 
     public function __construct(
         private UserServiceInterface $repo
@@ -68,8 +69,9 @@ class UserController extends Controller
     {
         try {
             $data = [];
-            $data['page'] = self::UPDATE_PAGE;
-            return view('admin.user.create', $data);
+            $data['page'] = self::PROFILE_PAGE;
+            $data['user'] = auth()->user();
+            return view('admin.user.profile', $data);
         } catch (Exception $ex) {
             return redirect()->back()->with("error", $ex->getMessage());
         }

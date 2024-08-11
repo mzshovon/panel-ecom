@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">
-                <button class="btn btn-primary btn-md" style="float: right" data-bs-toggle="modal" data-bs-target="#create-role-modal">Add User
+                <button class="btn btn-primary btn-md" style="float: right" data-bs-toggle="modal" data-bs-target="#create-role-modal">Add Role
                     <i class="bi bi-plus"></i>
                 </button>
             </h5>
@@ -90,6 +90,7 @@
     <script src="{{URL::to('/')}}/public/assets/js/custom.js"></script>
     <script>
         function updateRoleModalShow(url, id, name, display, description) {
+            $(".modal-title").text('Update Role');
             $("#roleForm").attr('action', url);
             $("#role_name").val(name);
             $("#role_display_name").val(display);

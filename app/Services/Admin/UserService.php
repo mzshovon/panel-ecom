@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserService implements UserServiceInterface
 {
+    protected string $imagePath = "storage/img/user/{id}/";
+
     function __construct(
         private readonly UserRepo $userRepo
     ){}
@@ -63,6 +65,9 @@ class UserService implements UserServiceInterface
             $user = $this->userRepo->findOrFail($id);
             $user->syncRoles([$request['role']]);
         }
+        if(isset($request['profile_image'])) {
+            $request['image'] = $this->uploadImageandGetImageDir($request['profile_image'], $id);
+        }
         $data = $this->userRepo->update("id", $id, $this->fillableData($request));
         return $data ?? false;
     }
@@ -101,5 +106,18 @@ class UserService implements UserServiceInterface
             }
         }
         return $data;
+    }
+
+    /**
+     * @param array $image
+     * @param int $userId
+     *
+     * @return array
+     */
+    private function uploadImageandGetImageDir($image, int $userId) : string
+    {
+        $imgPath = str_replace("{id}", $userId, $this->imagePath);
+        $image_path = storeOrUpdateImage($imgPath, $image, $image->getClientOriginalName());
+        return $image_path;
     }
 }
