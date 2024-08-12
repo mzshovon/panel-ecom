@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group">
                             <label for="#">Enter Password</label>
-                            <a class="float-right" href="#">Forget password?</a>
+                            <a class="float-right" href="{{route('password.email')}}">Forget password?</a>
                             <input type="password" name="password" class="form-control" placeholder="Enter Password">
                         </div>
 

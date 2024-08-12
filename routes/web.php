@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\Auth\CustomRegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
@@ -30,6 +32,8 @@ use Illuminate\Support\Facades\Route;
     Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [CustomLoginController::class, 'login'])->name('user-login');
     Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
+    Route::get('/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.email');
+    Route::post('/reset', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
     Route::get('/', [HomePageController::class, 'home'])->name('home')->middleware("traffic");
     Route::get('/about', [HomePageController::class, 'about'])->name('about')->middleware("traffic");

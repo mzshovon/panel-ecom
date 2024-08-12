@@ -1,47 +1,41 @@
-@extends('layouts.app')
-
+@extends('frontend.layouts.app')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
+<div class="account section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="login-form border p-5">
+                    <div class="text-center heading">
+                        <h2>Password Reset</h2>
+                    </div>
+                    <form action="{{ route('password.email') }}" method="POST">
                         @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="form-group mb-4">
+                            <label for="#">Enter email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Enter Username">
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-main mt-3 btn-block">Send Reset Link</button>
+                        <p class="lead">Don’t have an account? <a href="{{route('signup')}}">Create a free account</a></p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('script')
+    @if ($errors->any())
+        @php
+            $errorMessages = $errors->all();
+        @endphp
+        <script>
+            let errorMessages = {!! json_encode($errorMessages) !!};
+            let errorMessage = errorMessages.join("\n");
+            showErrorAlert(errorMessage);
+        </script>
+    @endif
 @endsection
