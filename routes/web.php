@@ -32,8 +32,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [CustomLoginController::class, 'login'])->name('user-login');
     Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
-    Route::get('/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.email');
-    Route::post('/reset', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/forgot-email', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.email');
+    Route::post('/forgot-email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
 
     Route::get('/', [HomePageController::class, 'home'])->name('home')->middleware("traffic");
     Route::get('/about', [HomePageController::class, 'about'])->name('about')->middleware("traffic");
