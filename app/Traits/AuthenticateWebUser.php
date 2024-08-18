@@ -114,7 +114,7 @@ trait AuthenticateWebUser
      */
     protected function credentials(Request $request)
     {
-        return $request->only(['email', 'password', 'contact']);
+        return $request->only(['email', 'password', 'mobile']);
     }
     /**
      * Send the response after the user was authenticated.

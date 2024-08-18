@@ -9,6 +9,11 @@
                     <div class="text-center heading">
                         <h2>Password Reset</h2>
                     </div>
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <form action="{{ route('password.email') }}" method="POST">
                         @csrf
                         <div class="form-group mb-4">

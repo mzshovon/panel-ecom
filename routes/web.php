@@ -26,16 +26,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Auth::routes();
     // User auth routes
     Route::get('/signup', [CustomRegisterController::class, 'showRegistrationForm'])->name('signup');
     Route::post('/signup', [CustomRegisterController::class, 'register'])->name('register');
     Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [CustomLoginController::class, 'login'])->name('user-login');
     Route::post('/logout', [CustomLoginController::class, 'logout'])->name('logout');
-    Route::get('/forgot-email', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.email');
+    Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/forgot-email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('/reset', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
+    Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
     Route::get('/', [HomePageController::class, 'home'])->name('home')->middleware("traffic");
     Route::get('/about', [HomePageController::class, 'about'])->name('about')->middleware("traffic");
