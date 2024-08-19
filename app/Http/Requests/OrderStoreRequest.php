@@ -24,7 +24,7 @@ class OrderStoreRequest extends FormRequest
         return [
             "name" => "required|string|max:80",
             "address" => "required|string|max:500",
-            "notes" => "nullable|string|max:200",
+            "notes" => "nullable|string|max:400",
             "quantity" => "required|numeric",
             "total_amount" => "required|string",
             "shipping_charge" => "required|string",
