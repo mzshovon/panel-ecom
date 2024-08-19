@@ -67,13 +67,23 @@
                                 <option value="{{$order->payment_type}}" {{$order->payment_type == "Payment Gateway"}}>Payment Gateway</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label for="inputCity" class="form-label">City</label>
-                            <input type="text" name="city" class="form-control" id="inputCity" value="{{$order->city ?? ""}}">
+                        <div class="col-md-2">
+                            <label for="inputEmail5" class="form-label">Invoice No.</label>
+                            <input type="text" name="invoice_no" class="form-control" id="inputEmail5" placeholder="Ex.ECMBD01" value="{{$order->invoice_no}}">
                         </div>
                         <div class="col-md-2">
-                            <label for="inputZip" class="form-label">Zip</label>
-                            <input type="text" name="zip" class="form-control" id="inputZip" value="{{$order->zip ?? ""}}">
+                            <label for="inputEmail5" class="form-label">Merchant ID</label>
+                            <input type="text" name="merchant_id" class="form-control" id="inputEmail5" value="{{$order->merchant_id}}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputState" class="form-label">Courier</label>
+                            <select id="inputState" name="courier" class="form-select">
+                                <option value="pathao" {{$order->courier == 'pathao' ? 'selected' : ''}}>Pathao</option>
+                                <option value="steadfast" {{$order->courier == 'steadfast' ? 'selected' : ''}}>Steadfast</option>
+                                <option value="by office" {{$order->courier == 'by office' ? 'selected' : ''}}>By Office</option>
+                                <option value="redex" {{$order->courier == 'redex' ? 'selected' : ''}}>Redex</option>
+                                <option value="sundarban" {{$order->courier == 'sundarban' ? 'selected' : ''}}>Sundarban</option>
+                            </select>
                         </div>
                         <div class="col-6">
                             <label for="floatingTextarea">Address</label>
@@ -108,6 +118,10 @@
 
     <script>
         $(document).ready(function() {
+            $('input[name="quantity"]').on("blur change", function(){
+                let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
+                $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);
+            });
             $('input[name="total_amount"]').on("blur change", function(){
                 let totalAmountAfterDiscount = getTotalAmountAfterDiscount();
                 $('input[name="total_amount_after_discount"]').val(totalAmountAfterDiscount);
@@ -123,9 +137,10 @@
 
             function getTotalAmountAfterDiscount()
             {
-                let totalAmount = $('input[name="total_amount"]').val();
-                let discount = $('input[name="total_discount"]').val();
-                let shippingCharge = $('input[name="shipping_charge"]').val();
+                let totalQty = $('input[name="quantity"]').val() ?? 0;
+                let totalAmount = totalQty * $('input[name="total_amount"]').val() ?? 0;
+                let discount = $('input[name="total_discount"]').val() ?? 0;
+                let shippingCharge = $('input[name="shipping_charge"]').val() ?? 0;
                 let totalAmountAfterDiscount = parseInt(totalAmount) + parseInt(shippingCharge) - parseInt(discount);
                 return totalAmountAfterDiscount;
             }
