@@ -16,6 +16,7 @@
                         @csrf
                         <div class="col-md-3">
                             <label for="inputName5" class="form-label">Name</label>
+                            <input type="hidden" name="id" class="form-control" id="inputName5" value="{{$order->id}}">
                             <input type="text" name="name" class="form-control" id="inputName5" value="{{$order->name ?? ""}}">
                         </div>
                         <div class="col-md-3">

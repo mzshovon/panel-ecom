@@ -31,6 +31,8 @@ class OrderStoreRequest extends FormRequest
             "total_discount" => "nullable|string",
             "total_amount_after_discount" => "required|string",
             "status" => "required|string",
+            "invoice_no" => "required|string|max:200|unique:orders,invoice_no",
+            "merchant_id" => "nullable|string|max:200|unique:orders,merchant_id",
             "payment_type" => "required|string|in:Cash on delivery,Payment Gateway,card,mfs",
             'products.*' => 'required|exists:products,id',
             'quantities.*' => 'required|integer|min:1',
