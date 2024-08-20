@@ -112,4 +112,12 @@ return [
 
     'password_timeout' => 10800,
 
+    'pathao' => [
+        'client_id' => env('CLIENT_ID'),
+        'client_secret' => env('CLIENT_SECRET'),
+        'username' => env('CLIENT_USERNAME'),
+        'password' => env('CLIENT_PASSWORD'),
+        'grant_type' => env('CLIENT_GRANT_TYPE'),
+    ],
+
 ];
