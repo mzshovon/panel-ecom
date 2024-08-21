@@ -82,6 +82,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/orders/update-order-product', [OrderController::class, 'updateOrderProduct'])->name('orders.update.product');
         Route::delete('/orders/delete-order-product/{orderedProductId}', [OrderController::class, 'destroyOrderProducts'])->name('orders.delete.product');
         Route::post('/users/assign-role', [UserController::class, 'assignRole'])->name('users.assign.role');
+        Route::post('/orders/pathao', [UserController::class, 'pathao'])->name('orders.pathao');
     });
 
 
